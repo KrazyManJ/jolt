@@ -1,2 +1,5 @@
 **drawio.bkp
-/.idea
+.idea
+.venv
+config.py
+**.sqlite
