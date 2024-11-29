@@ -1,0 +1,16 @@
+<header class="flex justify-center bg-titan-100">
+    <div class="flex justify-between flex-row flex-grow py-4 px-8 max-w-screen-xl">
+        <a class="flex flex-row no-underline text-titan-950" href="{{ url_for('index') }}">
+            <img class="h-8 mr-2" src="{{ url_for('static', filename='img/favicon.svg') }}">
+            <p class="text-2xl">Jolt</p>
+        </a>
+        <div class="flex flex-row">
+            <a class="mr-2" href="{{ url_for('bikes_management_page') }}">
+                <img class="h-7" src="{{ url_for('static', filename='img/wrench.svg') }}">
+            </a>
+            <a href="{{ url_for('user_profile_page') }}">
+                <img class="h-7" src="{{ url_for('static', filename='img/user.svg') }}">
+            </a>
+        </div>
+    </div>
+</header>
