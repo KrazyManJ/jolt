@@ -11,7 +11,7 @@ database.init_app(app)
 
 @app.route("/")
 def index():
-    return render_template("index.jinja", page_title="Homepage")
+    return render_template("index.jinja")
 
 @app.route('/bikes-management')
 def bikes_management_page():

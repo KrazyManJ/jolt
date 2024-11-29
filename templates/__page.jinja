@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://cdn.tailwindcss.com/3.4.15"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <title>{{ page_title }} | Jolt</title>
+    <title>{% block title %}{% endblock %} | Jolt</title>
 </head>
 <body class="min-h-screen flex flex-col m-0">
     {% include 'components/header.jinja' %}
