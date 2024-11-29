@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from livereload import Server
 
 from database import database
 
@@ -21,4 +22,6 @@ def user_profile_page():
     return render_template("user_profile.jinja", page_title="My profile")
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5001, debug=True)
+    server = Server(app.wsgi_app)
+    server.serve(host='0.0.0.0',port=5001,debug=True)
+    # app.run('0.0.0.0', port=5001, debug=True)
