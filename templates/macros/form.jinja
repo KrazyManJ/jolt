@@ -1,6 +1,6 @@
 {% macro form_field(field, variant='block') %}
     <div>
-        <div>{{ field.label }}</div>
+        <div class="text-titan-950">{{ field.label }}</div>
         {% if field.type == 'RadioField' %}
             {% for subfield in field %}
                 <label>

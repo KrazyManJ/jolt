@@ -1,11 +1,17 @@
 {% extends '__page.jinja' %}
 {% from 'macros/form.jinja' import form_field %}
 
+{% block title %}
+    Login
+{% endblock %}
 {% block body %}
-	<form method="post">
-        <div class="flex justify-center bg-titan-300 p-2">
+
+    <div class="flex flex-col place-items-center
+        bg-titan-200 p-2 gap-1 w-56 mx-auto">
+        <h1>Login</h1>
+        <form method="post">
             {{ form_field(form.login) }}
             {{ form_field(form.password) }}
-        </div>
-    </form>
+        </form>
+    </div>
 {% endblock %}
