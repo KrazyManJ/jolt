@@ -1,17 +1,18 @@
 {% extends '__page.jinja' %}
-{% from 'macros/form.jinja' import form_field, form_submit %}
+{% from 'macros/form.jinja' import form_field, form_submit, form_cancel %}
 
 {% block title %}
     Login
 {% endblock %}
 {% block body %}
     <div class="flex flex-col place-items-center
-        bg-titan-200 p-2 gap-1 w-56 mx-auto rounded-md">
+       bg-titan-100 p-2 gap-1 w-56 m-auto rounded-md flex-grow">
         <h1 class="text-xl  font-bold mb-1">Login</h1>
         <form method="post">
             {{ form_field(form.login) }}
             {{ form_field(form.password) }}
-            <div class="flex justify-end">{{ form_submit() }}</div>
+            <div class="flex justify-end">{{ form_submit("Login") }}</div>
+            <div class="justify-start">{{ form_cancel(redirect=url_for('index')) }}</div>
         </form>
     </div>
 {% endblock %}

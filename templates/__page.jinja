@@ -14,8 +14,8 @@
     {% if request.endpoint == 'index' %}
     	{% include 'components/banner.jinja' %}
     {% endif %}
-    <div class="w-full relative {% if request.endpoint == 'index' %} shadow-[0_-20px_16px_16px_#fff] {% endif %} py-5 grow">
-        <main class="max-w-screen-xl mx-auto px-5">
+    <div class="w-full relative {% if request.endpoint == 'index' %} shadow-[0_-20px_16px_16px_#fff] {% endif %} py-5 grow flex">
+        <main class="max-w-screen-xl mx-auto px-5 flex">
             {% block body %}
 
             {% endblock %}

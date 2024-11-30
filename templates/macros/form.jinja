@@ -21,6 +21,10 @@
 {% endmacro %}
 
 {% macro form_submit(label="Submit") %}
-    <input class="my-2 bg-primary p-1 rounded-md
+    <input class="mt-2 mb-1 bg-primary p-1 rounded-md
     text-white" type="submit" value="{{ label }}">
+{% endmacro %}
+
+{% macro form_cancel(redirect,label="Cancel") %}
+    <a href={{ redirect }}>{{ label }}</a>
 {% endmacro %}
