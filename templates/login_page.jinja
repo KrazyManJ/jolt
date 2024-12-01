@@ -11,8 +11,10 @@
         <form method="post">
             {{ form_field(form.login) }}
             {{ form_field(form.password) }}
-            <div class="flex justify-end">{{ form_submit("Login") }}</div>
-            <div class="justify-start">{{ form_cancel(redirect=url_for('index')) }}</div>
+            <div class="flex justify-end gap-20">
+                <div class="mt-4 mb-1">{{ form_cancel(redirect=url_for('index')) }}</div>
+                <div class="mt-2 mb-1">{{ form_submit("Login") }}</div>
+            </div>
         </form>
     </div>
 {% endblock %}

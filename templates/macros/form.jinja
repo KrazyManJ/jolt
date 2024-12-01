@@ -7,6 +7,8 @@
                     {{ subfield() }} {{ subfield.label.text }}
                 </label>
             {% endfor %}
+        {% elif field.type == 'StringField' %}
+            {{ field(**kwargs)|safe }}
         {% else %}
             {{ field(**kwargs)|safe }}
         {% endif %}
@@ -21,10 +23,11 @@
 {% endmacro %}
 
 {% macro form_submit(label="Submit") %}
-    <input class="mt-2 mb-1 bg-primary p-1 rounded-md
+    <input class="bg-primary px-2 py-2 rounded-md
     text-white" type="submit" value="{{ label }}">
 {% endmacro %}
 
 {% macro form_cancel(redirect,label="Cancel") %}
-    <a href={{ redirect }}>{{ label }}</a>
+    <a class="bg-titan-400 px-2 py-2 rounded-md
+    text-white" href={{ redirect }}>{{ label }}</a>
 {% endmacro %}
