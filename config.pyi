@@ -1,2 +1,3 @@
 SECRET_KEY: str
 DATABASE: str
+PASSWORD_SALT: str
