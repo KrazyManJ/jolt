@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from livereload import Server
 
 from database import database
-from form import LoginForm
+from form import LoginForm, RegisterForm
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -25,6 +25,10 @@ def user_profile_page():
 @app.route('/login')
 def login_page():
     return render_template("login_page.jinja",form=LoginForm())
+
+@app.route('/register')
+def register_page():
+    return render_template("register_page.jinja",form=RegisterForm())
 
 if __name__ == '__main__':
     server = Server(app.wsgi_app)
