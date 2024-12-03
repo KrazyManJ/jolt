@@ -5,16 +5,18 @@
     Login
 {% endblock %}
 {% block body %}
-    <div class="flex flex-col place-items-center
-       bg-titan-100 p-2 gap-1 w-56 m-auto rounded-md flex-grow">
-        <h1 class="text-xl  font-bold mb-1">Login</h1>
-        <form method="post">
-            {{ form_field(form.login) }}
-            {{ form_field(form.password) }}
-            <div class="flex justify-end gap-20">
-                <div class="mt-4 mb-1">{{ form_cancel(redirect=url_for('index')) }}</div>
-                <div class="mt-4 mb-1">{{ form_submit("Login") }}</div>
-            </div>
-        </form>
+    <div class="h-full flex items-center">
+        <div class="flex flex-col items-center
+           bg-titan-100 p-2 gap-1 w-56 rounded-md">
+            <h1 class="text-xl  font-bold mb-1">Login</h1>
+            <form method="post">
+                {{ form_field(form.login) }}
+                {{ form_field(form.password) }}
+                <div class="flex justify-end gap-20">
+                    <div class="mt-4 mb-1">{{ form_cancel(redirect=url_for('index')) }}</div>
+                    <div class="mt-4 mb-1">{{ form_submit("Login") }}</div>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}
