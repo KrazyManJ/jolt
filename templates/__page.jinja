@@ -9,19 +9,19 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <title>{% block title %}{% endblock %} | Jolt</title>
 </head>
-<body class="min-h-screen flex flex-col m-0">
+<body class="min-h-screen flex flex-col m-0 w-full">
     {% include 'components/header.jinja' %}
     {% if request.endpoint == 'index' %}
     	{% include 'components/banner.jinja' %}
     {% endif %}
     {% include '__messages.jinja' %}
-    <div class="w-full relative {% if request.endpoint == 'index' %} shadow-[0_-20px_16px_16px_#fff] {% endif %} py-5 grow flex">
-        <main class="max-w-screen-xl mx-auto px-5">
-            {% block body %}
 
-            {% endblock %}
-        </main>
-    </div>
+    <main class="max-w-screen-xl h-full w-full mx-auto p-10 lg:p-5 grow flex flex-col">
+        {% block body %}
+
+        {% endblock %}
+    </main>
+
     {% include 'components/footer.jinja' %}
 </body>
 </html>

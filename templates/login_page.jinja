@@ -5,9 +5,8 @@
     Login
 {% endblock %}
 {% block body %}
-    <div class="h-full flex justify-center items-center flex-col">
-        <div class="flex flex-col items-center
-           bg-titan-100 p-2 gap-1 w-56 rounded-md">
+    <div class="min-h-full flex justify-center items-center flex-col grow">
+        <div class="flex flex-col items-center bg-titan-100 p-2 gap-1 w-56 rounded-md">
             <h1 class="text-xl  font-bold mb-1">Login</h1>
             <form method="post">
                 {{ form_field(form.login) }}

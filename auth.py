@@ -9,9 +9,8 @@ from flask import url_for
 def login_required(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
-        print(session)
         if "authenticated" not in session:
-            flash("You must be logged in")
+            flash("You must be logged in.", category='warning')
             return redirect(url_for("login_page"))
         return func(*args, **kwargs)
 
@@ -23,7 +22,7 @@ def roles_required(*roles):
         @wraps(func)
         def decorated_function(*args, **kwargs):
             if session['role'] not in roles:
-                flash('You have no rights to do that', 'error')
+                flash('Error: Cannot access this content!', category='error')
                 return redirect(request.referrer)
             return func(*args, **kwargs)
 

@@ -37,6 +37,7 @@ def login_page():
         )
         if not user:
             flash("Invalid username or password",category="error")
+            return redirect(request.path)
         else:
             session['authenticated'] = 1
             session['id'] = user['user_id']
@@ -81,6 +82,6 @@ def logout():
 
 
 if __name__ == '__main__':
-    # server = Server(app.wsgi_app)
-    # server.serve(host='0.0.0.0',port=5001,debug=True)
-    app.run('0.0.0.0', port=5001, debug=True)
+    server = Server(app.wsgi_app)
+    server.serve(host='0.0.0.0',port=5001,debug=True)
+    # app.run('0.0.0.0', port=5001, debug=True)
