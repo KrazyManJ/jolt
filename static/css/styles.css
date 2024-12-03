@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --col-primary-50: #fdfbe9;
+    --col-primary-100: #faf6c7;
+    --col-primary-200: #f7eb91;
+    --col-primary-300: #f2d952;
+    --col-primary-400: #ecc31f;
+    --col-primary: #ecc31f;
+    --col-primary-500: #dcac16;
+    --col-primary-600: #be8610;
+    --col-primary-700: #986010;
+    --col-primary-800: #7e4d15;
+    --col-primary-900: #6b3f18;
+    --col-primary-950: #3e200a;
+
+    --col-titan-50: #f7f7f6;
+    --col-titan-100: #e5e5e2;
+    --col-titan-200: #cbc9c4;
+    --col-titan-300: #aaa69e;
+    --col-titan-400: #888479;
+    --col-titan-500: #6d695f;
+    --col-titan-600: #56544b;
+    --col-titan-700: #47453e;
+    --col-titan-800: #3b3934;
+    --col-titan-900: #33322e;
+    --col-titan-950: #1b1b18;
+}
