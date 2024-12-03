@@ -1,8 +1,4 @@
-{% if request.endpoint == 'index' %}
-<header class="flex justify-center bg-titan-100 shadow-[inset_0_-10px_15px_-3px_rgba(109,105,95,1)]">
-{% else %}
-<header class="flex justify-center bg-titan-100 shadow-[inset_0_-10px_15px_-3px_rgba(249,248,244,1)]">
-{% endif %}
+<header class="flex justify-center bg-titan-100 shadow-xl relative z-50">
     <div class="flex justify-between flex-row flex-grow pt-2 pb-1 md:py-4 px-8 max-w-screen-xl">
         <a class="flex flex-row no-underline text-titan-950" href="{{ url_for('index') }}">
             <img class="h-8 mr-2" src="{{ url_for('static', filename='img/favicon.svg') }}">
