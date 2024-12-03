@@ -28,3 +28,8 @@
     --col-titan-900: #33322e;
     --col-titan-950: #1b1b18;
 }
+
+main a {
+    text-decoration: underline;
+    color: var(--col-primary);
+}
