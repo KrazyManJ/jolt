@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect, session, flash
 from livereload import Server
 
-from auth import login_required, roles_required
+from auth import login_required, roles_required, guest_required
 from database import database
 from form import LoginForm, RegisterForm
 from services.user_service import UserService
@@ -28,6 +28,7 @@ def user_profile_page():
     return render_template("user_profile.jinja")
 
 @app.route('/login', methods=["GET", "POST"])
+@guest_required
 def login_page():
     if request.method == "POST":
 
@@ -52,6 +53,7 @@ def login_page():
     return render_template("login_page.jinja",form=LoginForm())
 
 @app.route('/register', methods=["GET", "POST"])
+@guest_required
 def register_page():
     if request.method == "POST":
         UserService.register(

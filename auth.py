@@ -16,6 +16,15 @@ def login_required(func):
 
     return decorated_function
 
+def guest_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if "authenticated" in session:
+            flash("You are already logged in.", category='warning')
+            return redirect(request.referrer)
+        return func(*args, **kwargs)
+
+    return decorated_function
 
 def roles_required(*roles):
     def roles_decorator(func):
