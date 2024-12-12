@@ -55,17 +55,23 @@ def login_page():
 @app.route('/register', methods=["GET", "POST"])
 @guest_required
 def register_page():
+    form = RegisterForm()
     if request.method == "POST":
-        UserService.register(
-            request.form["login"],
-            request.form["firstname"],
-            request.form["lastname"],
-            request.form["email"],
-            request.form["phone"],
-            request.form["password"]
-        )
-        return redirect(url_for("login_page"))
-    return render_template("register_page.jinja",form=RegisterForm())
+        user = request.form
+        if user["password"] == user["passwordAgain"]:
+            UserService.register(
+                user["login"],
+                user["firstname"],
+                user["lastname"],
+                user["email"],
+                user["phone"],
+                user["password"]
+            )
+            return redirect(url_for("login_page"))
+        flash("Passwords do not match",category="error")
+        form.fill_after_fail_attempt(user)
+        return render_template("register_page.jinja",form=form)
+    return render_template("register_page.jinja",form=form)
 
 @app.route('/logout')
 @login_required
@@ -84,6 +90,6 @@ def logout():
 
 
 if __name__ == '__main__':
-    server = Server(app.wsgi_app)
-    server.serve(host='0.0.0.0',port=5001,debug=True)
-    # app.run('0.0.0.0', port=5001, debug=True)
+    # server = Server(app.wsgi_app)
+    # server.serve(host='0.0.0.0',port=5001,debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)
