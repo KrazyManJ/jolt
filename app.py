@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect, session, flash
 from livereload import Server
 
+from Jolt.views.bikes_management import bikes_management
+from Jolt.views.index import index
 from auth import login_required, roles_required, guest_required
 from database import database
 from form import LoginForm, RegisterForm
@@ -10,22 +12,19 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config.from_object('config')
 database.init_app(app)
+app.register_blueprint(index, url_prefix='/')
+app.register_blueprint(bikes_management, url_prefix='/bikes-management')
 
-
-@app.route("/")
-def index():
-    return render_template("index.jinja")
-
-@app.route('/bikes-management')
-@login_required
-@roles_required("employee")
-def bikes_management_page():
-    return render_template("bikes_management.jinja")
+# @app.route('/bikes-management')
+# @login_required
+# @roles_required("employee")
+# def bikes_management_page():
+#     return render_template("bikes_management/page.jinja")
 
 @app.route('/user-profile')
 @login_required
 def user_profile_page():
-    return render_template("user_profile.jinja")
+    return render_template("user_profile/page.jinja")
 
 @app.route('/login', methods=["GET", "POST"])
 @guest_required
@@ -48,9 +47,9 @@ def login_page():
             session['role'] = user['role_name']
 
 
-        return redirect(url_for("index"))
+        return redirect(url_for("index.page"))
 
-    return render_template("login_page.jinja",form=LoginForm())
+    return render_template("login_page/page.jinja", form=LoginForm())
 
 @app.route('/register', methods=["GET", "POST"])
 @guest_required
@@ -70,8 +69,8 @@ def register_page():
             return redirect(url_for("login_page"))
         flash("Passwords do not match",category="error")
         form.fill_after_fail_attempt(user)
-        return render_template("register_page.jinja",form=form)
-    return render_template("register_page.jinja",form=form)
+        return render_template("register_page/page.jinja", form=form)
+    return render_template("register_page/page.jinja", form=form)
 
 @app.route('/logout')
 @login_required
@@ -85,7 +84,7 @@ def logout():
         'role'
     ]:
         session.pop(val)
-    return redirect(url_for('index'))
+    return redirect(url_for('index.page'))
 
 
 

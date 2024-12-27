@@ -1,0 +1,13 @@
+{% extends '__page.jinja' %}
+
+{% block title %}
+    Login
+{% endblock %}
+{% block body %}
+    <div class="min-h-full flex justify-center items-center flex-col grow">
+        {% include 'login_page/form.jinja' %}
+        <div>Ještě nemáte účet, nevadí, registrujte se
+            <a href="{{ url_for("register_page") }}">zde</a>
+        </div>
+    </div>
+{% endblock %}

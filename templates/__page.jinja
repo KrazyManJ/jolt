@@ -11,7 +11,7 @@
 </head>
 <body class="min-h-screen flex flex-col m-0 w-full">
     {% include 'components/header.jinja' %}
-    {% if request.endpoint == 'index' %}
+    {% if request.endpoint == 'index.page' %}
     	{% include 'components/banner.jinja' %}
     {% endif %}
     {% include '__messages.jinja' %}
