@@ -20,21 +20,6 @@ app.register_blueprint(login_page, url_prefix='/login')
 app.register_blueprint(register_page, url_prefix='/register')
 app.register_blueprint(logout_v, url_prefix='/logout')
 
-# @app.route('/logout')
-# @login_required
-# def logout():
-#     for val in [
-#         'authenticated',
-#         'id',
-#         'login_name',
-#         'first_name',
-#         'last_name',
-#         'role'
-#     ]:
-#         session.pop(val)
-#     return redirect(url_for('index.page'))
-
-
 
 if __name__ == '__main__':
     # server = Server(app.wsgi_app)

@@ -3,6 +3,11 @@
 {% block title %}Homepage{% endblock %}
 
 {% block body %}
-	<h1 class="text-xl font-bold">Our sortiment</h1>
-    <input type="search" placeholder="Find bike you wish">
+	<h1 class="text-2xl font-bold">Our sortiment</h1>
+    <div class="border-2 border-titan-600 rounded-md p-1">
+        <input type="search"
+           class="bg-[url('{{ url_for('static', filename="img/search.svg") }}')]
+           bg-no-repeat bg-left bg-[length:1.5rem_1rem] pl-7 focus:outline-none"
+           placeholder="Search for the bike...">
+    </div>
 {% endblock %}
