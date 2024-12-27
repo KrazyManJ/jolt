@@ -10,9 +10,9 @@
             </a>
             <a
                 {% if session['authenticated'] %}
-                   href="{{ url_for('user_profile_page') }}"
+                   href="{{ url_for('user_profile.page') }}"
                 {% else %}
-                   href="{{ url_for('login_page') }}"
+                   href="{{ url_for('login_page.page') }}"
                 {% endif %}
             >
                 <img class="h-7"

@@ -9,7 +9,7 @@
     {{ form_field(form.password) }}
     {{ form_field(form.passwordAgain) }}
     <div class="flex justify-end gap-20">
-        <div class="mt-4 mb-1">{{ form_cancel(redirect=url_for('index')) }}</div>
+        <div class="mt-4 mb-1">{{ form_cancel(redirect=url_for('index.page')) }}</div>
         <div class="mt-4 mb-1">{{ form_submit("Register") }}</div>
     </div>
 </form>

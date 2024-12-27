@@ -1,12 +1,13 @@
-from flask import Flask, render_template, request, url_for, redirect, session, flash
+from flask import Flask
 from livereload import Server
 
 from Jolt.views.bikes_management import bikes_management
 from Jolt.views.index import index
-from auth import login_required, roles_required, guest_required
+from Jolt.views.login_page import login_page
+from Jolt.views.logout import logout_v
+from Jolt.views.register_page import register_page
+from Jolt.views.user_profile import user_profile
 from database import database
-from form import LoginForm, RegisterForm
-from services.user_service import UserService
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -14,77 +15,24 @@ app.config.from_object('config')
 database.init_app(app)
 app.register_blueprint(index, url_prefix='/')
 app.register_blueprint(bikes_management, url_prefix='/bikes-management')
+app.register_blueprint(user_profile, url_prefix='/user-profile')
+app.register_blueprint(login_page, url_prefix='/login')
+app.register_blueprint(register_page, url_prefix='/register')
+app.register_blueprint(logout_v, url_prefix='/logout')
 
-# @app.route('/bikes-management')
+# @app.route('/logout')
 # @login_required
-# @roles_required("employee")
-# def bikes_management_page():
-#     return render_template("bikes_management/page.jinja")
-
-@app.route('/user-profile')
-@login_required
-def user_profile_page():
-    return render_template("user_profile/page.jinja")
-
-@app.route('/login', methods=["GET", "POST"])
-@guest_required
-def login_page():
-    if request.method == "POST":
-
-        user = UserService.verify(
-            request.form["login"],
-            request.form["password"]
-        )
-        if not user:
-            flash("Invalid username or password",category="error")
-            return redirect(request.path)
-        else:
-            session['authenticated'] = 1
-            session['id'] = user['user_id']
-            session['login_name'] = user['login_name']
-            session['first_name'] = user['first_name']
-            session['last_name'] = user['last_name']
-            session['role'] = user['role_name']
-
-
-        return redirect(url_for("index.page"))
-
-    return render_template("login_page/page.jinja", form=LoginForm())
-
-@app.route('/register', methods=["GET", "POST"])
-@guest_required
-def register_page():
-    form = RegisterForm()
-    if request.method == "POST":
-        user = request.form
-        if user["password"] == user["passwordAgain"]:
-            UserService.register(
-                user["login"],
-                user["firstname"],
-                user["lastname"],
-                user["email"],
-                user["phone"],
-                user["password"]
-            )
-            return redirect(url_for("login_page"))
-        flash("Passwords do not match",category="error")
-        form.fill_after_fail_attempt(user)
-        return render_template("register_page/page.jinja", form=form)
-    return render_template("register_page/page.jinja", form=form)
-
-@app.route('/logout')
-@login_required
-def logout():
-    for val in [
-        'authenticated',
-        'id',
-        'login_name',
-        'first_name',
-        'last_name',
-        'role'
-    ]:
-        session.pop(val)
-    return redirect(url_for('index.page'))
+# def logout():
+#     for val in [
+#         'authenticated',
+#         'id',
+#         'login_name',
+#         'first_name',
+#         'last_name',
+#         'role'
+#     ]:
+#         session.pop(val)
+#     return redirect(url_for('index.page'))
 
 
 

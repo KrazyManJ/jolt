@@ -11,7 +11,7 @@ def login_required(func):
     def decorated_function(*args, **kwargs):
         if "authenticated" not in session:
             flash("You must be logged in.", category='warning')
-            return redirect(url_for("login_page"))
+            return redirect(url_for("login_page.page"))
         return func(*args, **kwargs)
 
     return decorated_function

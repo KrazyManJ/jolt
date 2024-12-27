@@ -6,8 +6,8 @@
 {% block body %}
     <div class="min-h-full flex justify-center items-center flex-col grow">
         {% include 'login_page/form.jinja' %}
-        <div>Ještě nemáte účet, nevadí, registrujte se
-            <a href="{{ url_for("register_page") }}">zde</a>
+        <div>Don't have an account, don't worry create a new one
+            <a href="{{ url_for("register_page.page") }}">here</a>
         </div>
     </div>
 {% endblock %}
