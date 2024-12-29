@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template
 
-from Jolt.auth import login_required, roles_required
+from auth import login_required, roles_required
 
-bikes_management = Blueprint('bikes_management', __name__)
+bikes = Blueprint('bikes_management', __name__)
 
-@bikes_management.route('/')
+@bikes.route('/')
 @login_required
 @roles_required("employee")
 def page():

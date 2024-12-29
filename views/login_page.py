@@ -1,8 +1,8 @@
 from flask import Blueprint, request, flash, redirect, session, url_for, render_template
 
-from Jolt.auth import guest_required
-from Jolt.form import LoginForm
-from Jolt.services.user_service import UserService
+from auth import guest_required
+from form import LoginForm
+from services.user_service import UserService
 
 login_page = Blueprint('login_page', __name__)
 

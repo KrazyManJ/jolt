@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from Jolt.auth import login_required
+from auth import login_required
 
 user_profile = Blueprint('user_profile', __name__)
 

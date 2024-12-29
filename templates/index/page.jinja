@@ -7,7 +7,12 @@
     <div class="border-2 border-titan-600 rounded-md p-1">
         <input type="search"
            class="bg-[url('{{ url_for('static', filename="img/search.svg") }}')]
-           bg-no-repeat bg-left bg-[length:1.5rem_1rem] pl-7 focus:outline-none"
+           bg-no-repeat bg-left bg-[length:1.5rem_1rem] pl-7 focus:outline-none
+           w-full"
            placeholder="Search for the bike...">
+    </div>
+    <div class="flex">
+        {% include 'index/filter.jinja' %}
+        {% include 'index/bikes.jinja' %}
     </div>
 {% endblock %}

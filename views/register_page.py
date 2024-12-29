@@ -1,8 +1,8 @@
 from flask import Blueprint, request, redirect, url_for, flash, render_template
 
-from Jolt.auth import guest_required
-from Jolt.form import RegisterForm
-from Jolt.services.user_service import UserService
+from auth import guest_required
+from form import RegisterForm
+from services.user_service import UserService
 
 register_page = Blueprint('register_page', __name__)
 
