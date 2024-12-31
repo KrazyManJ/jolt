@@ -1,0 +1,11 @@
+<div>
+    {% for bike in bikes %}
+        <div>
+            {{ bike.name }} - {{ bike.description }} -
+            {{ bike.weight }} kg - {{ bike.body_size }} -
+            {{ bike.wheel_size }} - {{ bike.body_material }} -
+            {{ bike.gear_number }} - {{ bike.weight_limit }} kg -
+            {{ bike.is_available }}
+        </div>
+    {% endfor %}
+</div>
