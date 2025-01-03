@@ -1,13 +1,15 @@
 <header class="flex justify-center bg-titan-100 shadow-xl relative z-50">
     <div class="flex justify-between grow pt-2 pb-1 md:py-4 px-8 max-w-screen-xl">
         <a class="flex no-underline text-titan-950" href="{{ url_for('index.page') }}">
-            <img class="h-8 mr-2" src="{{ url_for('static', filename='img/favicon.svg') }}">
+            <img alt="" class="h-8 mr-2" src="{{ url_for('static', filename='img/favicon.svg') }}">
             <p class="text-2xl font-semibold">Jolt</p>
         </a>
         <div class="flex mt-0.5 gap-2">
-            <a class="mr-5 md:mr-2" href="{{ url_for('bikes_management.page') }}">
-                <img class="h-7" src="{{ url_for('static', filename='img/wrench.svg') }}">
-            </a>
+            {% if session['role'] == "employee" %}
+                <a class="mr-5 md:mr-2" href="{{ url_for('bikes_management.page') }}">
+                    <img alt="" class="h-7" src="{{ url_for('static', filename='img/wrench.svg') }}">
+                </a>
+            {% endif %}
             <a
                 {% if session['authenticated'] %}
                    href="{{ url_for('user_profile.page') }}"
@@ -15,7 +17,7 @@
                    href="{{ url_for('login_page.page') }}"
                 {% endif %}
             >
-                <img class="h-7"
+                <img alt="" class="h-7"
                     {% if session['authenticated'] %}
                        src="{{ url_for('static', filename='img/user.svg') }}"
                     {% else %}
