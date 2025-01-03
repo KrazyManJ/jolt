@@ -3,17 +3,49 @@
         <h1 class="text-lg font-bold">Filter</h1>
         <hr>
         <h2 class="font-bold">Availability</h2>
+        <div class="filter">
+            <span><input type="checkbox" name="ready" value="available"><label>Available</label></span>
+            <span><input type="checkbox" name="ready" value="borrowed"><label>Borrowed</label></span>
+        </div>
         <hr>
         <h2 class="font-bold">Weight</h2>
+        <div class="filter"><input type="range" name="weight" min="{{ filters[0][0] }}"
+                                   max="{{ filters[0][1] }}"></div>
         <hr>
         <h2 class="font-bold">Weight limit</h2>
+        <div class="filter"><input type="range" name="weight_lim" min="{{ filters[1][0] }}"
+                                   max="{{ filters[1][1] }}"></div>
         <hr>
         <h2 class="font-bold">Body size</h2>
+        <div class="filter">
+            {% for size in filters[3] %}
+                <span><input name="size" type="checkbox" value="{{ size[0] }}"><label>{{ size[0] }}</label></span>
+            {% endfor %}
+        </div>
         <hr>
         <h2 class="font-bold">Wheel size</h2>
+        <div class="filter">
+            {% for wsize in filters[5] %}
+                <span><input name="wsize" type="checkbox" value="{{ wsize[0] }}"><label>{{ wsize[0] }}</label></span>
+            {% endfor %}
+        </div>
         <hr>
         <h2 class="font-bold">Material</h2>
+        <div class="filter">
+            {% for material in filters[4] %}
+                <span><input name="material" type="checkbox" value="{{ material[0] }}">
+                    <label class="filter-label">{{ material[0] }}</label></span>
+            {% endfor %}
+        </div>
         <hr>
         <h2 class="font-bold">Gear</h2>
+        <div class="filter">
+            {% for gear in filters[3] %}
+                <span><input name="gear" type="checkbox" value="{{ gear[0] }}"><label>{{ gear[0] }}</label>
+                </span>
+            {% endfor %}
+        </div>
+        <hr>
+        <button type="submit">Apply</button>
     </form>
 </aside>
