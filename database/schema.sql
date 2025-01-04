@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS users;
 
 DROP TABLE IF EXISTS roles;
 
+DROP TABLE IF EXISTS bike_prices;
+
 CREATE TABLE roles (
     role_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
@@ -206,3 +208,14 @@ VALUES
      0
     )
 ;
+
+CREATE TABLE bike_prices (
+    bike_price_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bike_id INTEGER NOT NULL,
+    price REAL NOT NULL,
+    datetime DATETIME NOT NULL,
+    FOREIGN KEY (bike_id) REFERENCES bikes (bike_id)
+);
+
+INSERT INTO bike_prices (bike_id, price, datetime)
+VALUES (1, 100.50, '2026-01-01 10:00:00');

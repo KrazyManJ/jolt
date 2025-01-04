@@ -1,0 +1,10 @@
+{% extends '__page.jinja' %}
+
+{% block title %}Borrow{% endblock %}
+
+{% block body %}
+    <div class="flex h-max grow justify-center items-center gap-12">
+        {% include 'borrow/bike.jinja' %}
+        {% include 'borrow/calculation.jinja' %}
+    </div>
+{% endblock %}

@@ -11,8 +11,8 @@
             <p class="text-titan-400 text-sm">{{ bike.description }}</p>
             <div class="mt-4 flex justify-end">
                 {% if bike.is_available %}
-                    <a href="{{ url_for("index.page", id=bike.bike_id) }}" class="p-1 px-4 bg-primary-500 text-titan-50 rounded">
-                        <button>Borrow</button>
+                    <a href="{{ url_for("borrow.page", id=bike.bike_id) }}"
+                       class="p-1 px-4 bg-primary-500 text-titan-50 rounded">Borrow
                     </a>
                 {% else %}
                     Not available

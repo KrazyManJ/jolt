@@ -7,8 +7,8 @@ class BikeService:
         db = get_db()
         sql = ("SELECT bike_id,name,description,image,weight,body_size,"
                "wheel_size, body_material, gear_number, "
-               "weight_limit, is_available FROM bikes "
-               "WHERE is_shown = 1")
+               "weight_limit, is_available, price  FROM bikes JOIN bike_prices USING(bike_id) "
+               "WHERE is_shown = 1 AND datetime >= DATETIME('now') ")
         return db.execute(sql).fetchall()
 
     @staticmethod
@@ -17,12 +17,22 @@ class BikeService:
         return db.execute("SELECT * FROM bikes").fetchall()
 
     @staticmethod
-    def get_all_to_show_by_filter(availabilities, wmax, wlmax, bodies, wsizes, materials, gears):
+    def get_by_id_for_borrow(bike_id):
+        db = get_db()
+        sql = ("SELECT bike_id, name, description, image, price FROM bikes JOIN bike_prices "
+               "USING(bike_id) WHERE bike_id = ? AND datetime >= DATETIME('now') ")
+        arguments = bike_id
+        return db.execute(sql, arguments).fetchone()
+
+    @staticmethod
+    def get_all_to_show_by_filter(availabilities, wmax, wlmax, bodies, wsizes, materials, gears,
+                                  search_data, bprice):
         db = get_db()
         sql = ("SELECT bike_id,name,description,image,weight,body_size,wheel_size, body_material, gear_number,"
-               "weight_limit, is_available FROM bikes WHERE is_shown = 1 AND (is_available = ? OR is_available = ?)"
-               " AND weight <= ? AND weight_limit <= ?")
-        arguments = availabilities+[wmax,wlmax]
+               "weight_limit, price, is_available FROM bikes JOIN bike_prices USING(bike_id) "
+               "WHERE is_shown = 1 AND price <= ? AND (is_available = ? OR is_available = ?)"
+               " AND weight <= ? AND weight_limit <= ? ")
+        arguments = [bprice]+availabilities+[wmax,wlmax]
         if bodies:
             sql+=" AND body_size IN ({})".format( ', '.join(['?'] * len(bodies)))
             arguments += bodies
@@ -35,6 +45,9 @@ class BikeService:
         if gears:
             sql += " AND gear_number IN ({})".format( ', '.join(['?'] * len(gears)))
             arguments += gears
+        if search_data:
+            sql +=" AND (name LIKE ? OR description LIKE ?)"
+            arguments += ['%'+search_data+'%','%'+search_data+'%']
         return db.execute(sql,arguments).fetchall()
 
     @staticmethod
@@ -53,7 +66,9 @@ class BikeService:
         body_materials = db.execute(sql).fetchall()
         sql = "SELECT DISTINCT gear_number FROM bikes"
         gear_numbers = db.execute(sql).fetchall()
-        filters = [weights, weight_limits, body_sizes, wheel_sizes, body_materials, gear_numbers]
+        sql = "SELECT MIN(price) AS pmin, MAX(price) AS pmax FROM bike_prices"
+        prices = db.execute(sql).fetchone()
+        filters = [weights, weight_limits, body_sizes, wheel_sizes, body_materials, gear_numbers, prices]
         return filters
 
     @staticmethod
