@@ -4,48 +4,64 @@
         <hr>
         <h2 class="font-bold">Availability</h2>
         <div class="filter">
-            <span><input type="checkbox" name="ready" value="available"><label>Available</label></span>
-            <span><input type="checkbox" name="ready" value="borrowed"><label>Borrowed</label></span>
+            <span><input type="checkbox" name="ready" value="available" {% if form.getlist('ready')[0] ==
+             'available' or form.getlist('ready')|length == 2%}checked{% endif %}>
+                <label>Available</label></span>
+            <span><input type="checkbox" name="ready" value="borrowed" {% if form.getlist('ready')[0] ==
+             'borrowed' or form.getlist('ready')|length == 2%}checked{% endif %}><label>Borrowed</label>
+            </span>
         </div>
         <hr>
         <h2 class="font-bold">Weight</h2>
         <div class="filter"><input type="range" name="weight" min="{{ filters[0][0] }}"
-                                   max="{{ filters[0][1] }}"></div>
+                                   max="{{ filters[0][1] }}" value="{{ form["weight"] }}"></div>
         <hr>
         <h2 class="font-bold">Weight limit</h2>
         <div class="filter"><input type="range" name="weight_lim" min="{{ filters[1][0] }}"
-                                   max="{{ filters[1][1] }}"></div>
+                                   max="{{ filters[1][1] }}" value="{{ form["weight_lim"] }}"></div>
         <hr>
         <h2 class="font-bold">Body size</h2>
         <div class="filter">
-            {% for size in filters[3] %}
-                <span><input name="size" type="checkbox" value="{{ size[0] }}"><label>{{ size[0] }}</label></span>
+            {% for size in filters[2] %}
+                <span><input name="size" type="checkbox" value="{{ size[0] }}" {% if size[0] in form.getlist('size')%}
+                             checked{% endif %}><label>{{ size[0] }}
+                    </label>
+                </span>
             {% endfor %}
         </div>
         <hr>
         <h2 class="font-bold">Wheel size</h2>
         <div class="filter">
-            {% for wsize in filters[5] %}
-                <span><input name="wsize" type="checkbox" value="{{ wsize[0] }}"><label>{{ wsize[0] }}</label></span>
+            {% for wsize in filters[3] %}
+                <span><input name="wsize" type="checkbox" value="{{ wsize[0] }}" {% if wsize[0] in
+                        form.getlist('wsize')%}checked{% endif %}><label>{{ wsize[0] }}
+                    </label>
+                </span>
             {% endfor %}
         </div>
         <hr>
         <h2 class="font-bold">Material</h2>
         <div class="filter">
             {% for material in filters[4] %}
-                <span><input name="material" type="checkbox" value="{{ material[0] }}">
+                <span><input name="material" type="checkbox" value="{{ material[0] }}" {% if material[0] in
+                        form.getlist('material')%}checked{% endif %}>
                     <label class="filter-label">{{ material[0] }}</label></span>
             {% endfor %}
         </div>
         <hr>
         <h2 class="font-bold">Gear</h2>
         <div class="filter">
-            {% for gear in filters[3] %}
-                <span><input name="gear" type="checkbox" value="{{ gear[0] }}"><label>{{ gear[0] }}</label>
+            {% for gear in filters[5] %}
+                <span>
+                    <input name="gear" type="checkbox" value="{{ gear[0] }}"
+                        {% if gear[0]|string in form.getlist('gear')%}checked{% endif %}>
+                    <label>{{ gear[0] }}</label>
                 </span>
             {% endfor %}
         </div>
         <hr>
-        <button type="submit">Apply</button>
+        <span class="flex justify-end"><button class="bg-primary px-2 py-2 my-1 rounded-md text-white
+                                                        text-sm" type="submit">Apply</button>
+        </span>
     </form>
 </aside>

@@ -4,3 +4,5 @@
 config.py
 **.sqlite
 __pycache__
+**sccs
+styles.css.map

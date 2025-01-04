@@ -20,11 +20,11 @@ def page():
             available, borrowed = 0, 1
         show = BikeService.get_all_to_show_by_filter(
             [available, borrowed],request.form["weight"],request.form["weight_lim"],
-            request.form.getlist("size"),request.form.getlist("wsize"),request.form.get("material"),
-            request.form.get("gear")
+            request.form.getlist("size"),request.form.getlist("wsize"),request.form.getlist("material"),
+            request.form.getlist("gear")
         )
     else:
         show = BikeService.get_all_to_show()
     filters = BikeService.get_filters()
     return render_template(
-        'index/page.jinja', bikes=show, filters=filters)
+        'index/page.jinja', bikes=show, filters=filters, form=request.form)

@@ -46,6 +46,23 @@ main a {
     box-shadow: inset 0 -40px 16px -16px #fff;
 }
 
+input[type=checkbox] {
+    accent-color: var(--col-primary);
+    min-height: 1rem;
+    margin-right: 0.3rem;
+}
+
+.filter-label{
+    margin-right: 0.4rem;
+}
+
+.filter {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
 .bikes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
