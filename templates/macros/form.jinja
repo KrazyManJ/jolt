@@ -1,4 +1,4 @@
-{% macro form_field(field, variant='block') %}
+{% macro form_field(field, variant='block', req=False) %}
     <div class="mb-1">
         <div class="text-titan-950">{{ field.label }}</div>
         {% if field.type == 'RadioField' %}
@@ -8,7 +8,7 @@
                 </label>
             {% endfor %}
         {% else %}
-            {{ field(**kwargs)|safe }}
+            {{ field(required=req,**kwargs)|safe }}
         {% endif %}
         {% if field.errors %}
             <ul>

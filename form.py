@@ -1,5 +1,8 @@
 from wtforms import Form, validators
-from wtforms.fields.simple import StringField, PasswordField, EmailField
+from wtforms.fields.numeric import IntegerField, FloatField
+from wtforms.fields.simple import StringField, PasswordField, EmailField, BooleanField
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_wtf import FlaskForm
 
 
 class LoginForm(Form):
@@ -26,4 +29,35 @@ class RegisterForm(Form):
         self.lastname.data = userInput['lastname']
         self.email.data = userInput['email']
         self.phone.data = userInput['phone']
+
+class BikeForm(FlaskForm):
+    name = StringField(
+        label="Bike name",
+        validators=[validators.InputRequired()]
+    )
+    description = StringField(label="Description",validators=[validators.InputRequired()])
+    image = FileField(
+        label="Image",
+        validators=[FileAllowed(["jpg","jpeg"])],
+        render_kw={"accept":".jpg,.jpeg"}
+    )
+    weight = IntegerField(label="Weight",validators=[validators.InputRequired()])
+    body_size = IntegerField(label="Body size",validators=[validators.InputRequired()])
+    wheel_size = IntegerField(label="Wheel size",validators=[validators.InputRequired()])
+    body_material = StringField(label="Body material",validators=[validators.InputRequired()])
+    gear_number = IntegerField(label="Gear number",validators=[validators.InputRequired()])
+    weight_limit = IntegerField(label="Weight limit",validators=[validators.InputRequired()])
+    is_available = BooleanField(label="Is available",validators=[validators.InputRequired()])
+    is_shown = BooleanField(label="Is shown")
+
+    def __init__(self, edit: bool, **kwargs):
+        super().__init__(**kwargs)
+        print(self.image.render_kw,self.image.validators)
+        if not edit and not any([isinstance(v,FileRequired) for v in self.image.validators]):
+            self.image.validators.append(FileRequired())
+        elif edit and any([isinstance(v,FileRequired) for v in self.image.validators]):
+            for v in [v for v in self.image.validators if isinstance(v,FileRequired)]:
+                self.image.validators.remove(v)
+        print(self.image.render_kw,self.image.validators)
+
 

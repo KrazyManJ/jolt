@@ -1,0 +1,35 @@
+{% from 'macros/form.jinja' import form_field, form_submit, form_cancel %}
+
+{% extends '__page.jinja' %}
+
+{% block title %}
+    Add new bike
+{% endblock %}
+{% block body %}
+    <div class="w-full grow flex items-center justify-center">
+        <form method="POST" enctype="multipart/form-data" class="p-4 rounded shadow-xl border bg-titan-200">
+            {{ form.hidden_tag() }}
+            {{ form_field(form.name) }}
+            {{ form_field(form.description) }}
+            {{ form_field(form.image,req=False if id else True) }}
+            {{ form_field(form.weight) }}
+            {{ form_field(form.body_size) }}
+            {{ form_field(form.wheel_size) }}
+            {{ form_field(form.body_material) }}
+            {{ form_field(form.gear_number) }}
+            {{ form_field(form.weight_limit) }}
+            {% if id %}
+                {{ form_field(form.is_available) }}
+                {{ form_field(form.is_shown) }}
+            {% endif %}
+            <div class="flex justify-evenly w-full">
+                {{ form_cancel(url_for("bikes_management.page")) }}
+                {% if id %}
+                    {{ form_submit("Edit") }}
+                {% else %}
+                    {{ form_submit("Add") }}
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

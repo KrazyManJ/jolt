@@ -1,5 +1,5 @@
 from flask import Flask
-# from livereload import Server
+from livereload import Server
 
 from views.bikes_management import bikes
 from views.index import index

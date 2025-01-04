@@ -12,6 +12,11 @@ class BikeService:
         return db.execute(sql).fetchall()
 
     @staticmethod
+    def get_all():
+        db = get_db()
+        return db.execute("SELECT * FROM bikes").fetchall()
+
+    @staticmethod
     def get_all_to_show_by_filter(availabilities, wmax, wlmax, bodies, wsizes, materials, gears):
         db = get_db()
         sql = ("SELECT bike_id,name,description,image,weight,body_size,wheel_size, body_material, gear_number,"
@@ -51,3 +56,33 @@ class BikeService:
         filters = [weights, weight_limits, body_sizes, wheel_sizes, body_materials, gear_numbers]
         return filters
 
+    @staticmethod
+    def add_bike(name,description,image ,weight, body_size, wheel_size, body_material, gear_number, weight_limit):
+        db = get_db()
+        sql = f"INSERT INTO bikes (name, description, image, weight, body_size, wheel_size, body_material, gear_number, weight_limit) VALUES ({','.join(['?']*9)})"
+        db.execute(sql,(name,description,image ,weight, body_size, wheel_size, body_material, gear_number, weight_limit))
+        db.commit()
+
+    @staticmethod
+    def is_bike_with_id(bike_id: int):
+        db = get_db()
+        return bool(db.execute(f"SELECT EXISTS(SELECT bike_id FROM bikes WHERE bike_id = ?)",(bike_id,)).fetchone()[0])
+
+    @staticmethod
+    def delete_bike_with_id(bike_id: int):
+        db = get_db()
+        db.execute("DELETE FROM bikes WHERE bike_id = ?",(bike_id,))
+        db.commit()
+
+    @staticmethod
+    def get_bike_by_id(bike_id: int):
+        db = get_db()
+        return db.execute("SELECT * FROM bikes WHERE bike_id = ?",(bike_id,)).fetchone()
+
+    @staticmethod
+    def edit_bike_by_id(bike_id: int, name,description,image ,weight, body_size, wheel_size, body_material, gear_number, weight_limit, is_available, is_shown):
+        db = get_db()
+        sql = "UPDATE bikes SET name=?,description=?,image=?,weight=?,body_size=?,wheel_size=?,body_material=?,gear_number=?,weight_limit=?,is_available=?,is_shown=? WHERE bike_id = ?"
+        params = [name,description,image,weight,body_size,wheel_size,body_material,gear_number,weight_limit,is_available,is_shown,bike_id]
+        db.execute(sql,params)
+        db.commit()
