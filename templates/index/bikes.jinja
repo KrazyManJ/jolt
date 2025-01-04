@@ -1,11 +1,23 @@
-<div>
+<div class="bikes-grid gap-4 w-full">
     {% for bike in bikes %}
-        <div>
-            {{ bike.name }} - {{ bike.description }} -
-            {{ bike.weight }} kg - {{ bike.body_size }} -
-            {{ bike.wheel_size }} - {{ bike.body_material }} -
-            {{ bike.gear_number }} - {{ bike.weight_limit }} kg -
-            {{ bike.is_available }}
+        <div class="w-full border border-titan-500 rounded p-2">
+            <img src="data:image/jpeg;base64,{{ bike.image }}" alt="">
+{#            {{ bike.name }} - {{ bike.description }} -#}
+{#            {{ bike.weight }} kg - {{ bike.body_size }} -#}
+{#            {{ bike.wheel_size }} - {{ bike.body_material }} -#}
+{#            {{ bike.gear_number }} - {{ bike.weight_limit }} kg -#}
+{#            {{ bike.is_available }}#}
+            <h3 class="text-center text-lg font-bold">{{ bike.name }}</h3>
+            <p class="text-titan-400 text-sm">{{ bike.description }}</p>
+            <div class="mt-4 flex justify-end">
+                {% if bike.is_available %}
+                    <a href="{{ url_for("index.page", id=bike.bike_id) }}" class="p-1 px-4 bg-primary-500 text-titan-50 rounded">
+                        <button>Borrow</button>
+                    </a>
+                {% else %}
+                    Not available
+                {% endif %}
+            </div>
         </div>
     {% endfor %}
 </div>

@@ -5,7 +5,7 @@ class BikeService:
     @staticmethod
     def get_all_to_show():
         db = get_db()
-        sql = ("SELECT name,description,weight,body_size,"
+        sql = ("SELECT bike_id,name,description,image,weight,body_size,"
                "wheel_size, body_material, gear_number, "
                "weight_limit, is_available FROM bikes "
                "WHERE is_shown = 1")
@@ -14,7 +14,7 @@ class BikeService:
     @staticmethod
     def get_all_to_show_by_filter(availabilities, wmax, wlmax, bodies, wsizes, materials, gears):
         db = get_db()
-        sql = ("SELECT name,description,weight,body_size,wheel_size, body_material, gear_number,"
+        sql = ("SELECT bike_id,name,description,image,weight,body_size,wheel_size, body_material, gear_number,"
                "weight_limit, is_available FROM bikes WHERE is_shown = 1 AND (is_available = ? OR is_available = ?)"
                " AND weight <= ? AND weight_limit <= ?")
         arguments = availabilities+[wmax,wlmax]
