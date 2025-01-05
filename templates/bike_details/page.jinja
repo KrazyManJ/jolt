@@ -4,12 +4,17 @@
     {{ bike.name }}
 {% endblock %}
 {% block body %}
-    <div class="w-full grow flex items-center justify-center">
-        <div>
+    <div class="w-full grow flex flex-col md:flex-row items-center md:justify-center">
+        <div class="md:block hidden">
             <img width="400" src="data:image/jpeg;base64,{{ bike.image }}" alt="">
         </div>
-        <div class="w-96">
+        <div class="w-full md:w-96">
             <h1 class="text-4xl text-titan-950 mb-4 font-bold">{{ bike.name }}</h1>
+            <div class="md:hidden block">
+                <img width="400" class="mx-auto" src="data:image/jpeg;base64,{{ bike.image }}" alt="">
+
+            </div>
+
             <div class="text-justify text-titan-600">{{ bike.description }}</div>
 
             <table class="border-collapse border mt-8 w-full">
