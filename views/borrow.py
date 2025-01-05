@@ -9,6 +9,9 @@ borrow = Blueprint('borrow', __name__)
 @borrow.route('/<bike_id>', methods=['GET', 'POST'])
 @login_required
 def page(bike_id):
+    available = BikeService.is_bike_available(bike_id)
+    if not available:
+        return redirect(url_for('index.page'))
     if request.method == 'POST':
         flash("Borrow successful", category='success')
         BorrowService.borrow(bike_id,session['id'],request.form['to'],request.form['payment_method'])

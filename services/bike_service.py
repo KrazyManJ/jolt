@@ -26,7 +26,7 @@ class BikeService:
         db = get_db()
         sql = ("SELECT bike_id, name, description, image, price FROM bikes JOIN bike_prices "
                "USING(bike_id) WHERE bike_id = ? AND datetime >= DATETIME('now') ")
-        arguments = bike_id
+        arguments = [bike_id]
         return db.execute(sql, arguments).fetchone()
 
     @staticmethod
@@ -88,6 +88,13 @@ class BikeService:
     def is_bike_with_id(bike_id: int):
         db = get_db()
         return bool(db.execute(f"SELECT EXISTS(SELECT bike_id FROM bikes WHERE bike_id = ?)",(bike_id,)).fetchone()[0])
+
+    @staticmethod
+    def is_bike_available(bike_id: int):
+        db = get_db()
+        sql = "SELECT EXISTS(SELECT bike_id FROM bikes WHERE bike_id = ? AND is_available = 1)"
+        arguments = [bike_id]
+        return bool(db.execute(sql,arguments).fetchone()[0])
 
     @staticmethod
     def delete_bike_with_id(bike_id: int):

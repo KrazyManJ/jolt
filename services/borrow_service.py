@@ -8,6 +8,5 @@ class BorrowService:
         sql = ("INSERT INTO borrows (bike_id,user_id,datetime_to,payment_method) "
                "VALUES (?,?,?,?)")
         arguments = (bike_id,user_id,datetime_to,payment_method)
-        print(sql,arguments)
         db.execute(sql, arguments)
         db.commit()
