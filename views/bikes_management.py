@@ -3,7 +3,7 @@ import base64
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 from auth import login_required, roles_required
-from form import BikeForm
+from form import AddBikeForm, EditBikeForm
 from services.bike_service import BikeService
 
 bikes = Blueprint('bikes_management', __name__)
@@ -18,7 +18,7 @@ def page():
 @login_required
 @roles_required("employee")
 def add_page():
-    form = BikeForm(False)
+    form = AddBikeForm()
     if request.method == "POST":
         if not form.validate_on_submit():
             flash("There was an error while adding bike!",category="error")
@@ -28,8 +28,6 @@ def add_page():
                 input_data = form.data
                 input_data["image"] = base64.b64encode(file.read()).decode('utf-8')
                 input_data.pop('csrf_token')
-                input_data.pop('is_available')
-                input_data.pop('is_shown')
                 BikeService.add_bike(**input_data)
                 flash("Successfully added bike.",category="success")
                 return redirect(url_for("bikes_management.page"))
@@ -55,7 +53,7 @@ def edit_page(bike_id: int):
         flash(f"Bike with id '{bikes}' does not exist.", category="error")
         return redirect(url_for("bikes_management.page"))
 
-    form = BikeForm(True)
+    form = EditBikeForm()
     data = dict(BikeService.get_bike_by_id(bike_id))
 
     if request.method == "POST":

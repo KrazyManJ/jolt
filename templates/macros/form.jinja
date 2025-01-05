@@ -26,7 +26,7 @@
 {% endmacro %}
 
 {% macro form_cancel(redirect,label="Cancel") %}
-    <button onclick="window.location.href='{{ redirect }}'"
+    <button type="button" onclick="window.location.href='{{ redirect }}'"
                                    class="bg-titan-400 px-2 py-2 rounded-md
     text-white">{{ label }}</button>
 {% endmacro %}

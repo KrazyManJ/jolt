@@ -1,8 +1,11 @@
 from wtforms import validators
+from wtforms.fields.choices import SelectField
 from wtforms.fields.numeric import IntegerField
 from wtforms.fields.simple import StringField, PasswordField, EmailField, BooleanField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_wtf import FlaskForm
+
+from services.user_service import UserService
 
 
 class LoginForm(FlaskForm):
@@ -10,21 +13,41 @@ class LoginForm(FlaskForm):
     password = PasswordField(name='password', label='Password', validators=[validators.Length(min=5), validators.InputRequired()], render_kw={"class":"w-full"})
 
 class RegisterForm(FlaskForm):
-    login = StringField(name='login', label='Username', validators=[validators.Length(min=4, max=30), validators.InputRequired()], render_kw={"class":"w-full"})
-    firstname = StringField(name="firstname",label="Firstname", validators=[validators.InputRequired()], render_kw={"class":"w-full"})
-    lastname = StringField(name="lastname",label="Lastname", validators=[validators.InputRequired()], render_kw={"class":"w-full"})
+    login_name = StringField(name='login', label='Username', validators=[validators.Length(min=4, max=30), validators.InputRequired()], render_kw={"class": "w-full"})
+    first_name = StringField(name="firstname", label="Firstname", validators=[validators.InputRequired()], render_kw={"class": "w-full"})
+    last_name = StringField(name="lastname", label="Lastname", validators=[validators.InputRequired()], render_kw={"class": "w-full"})
     email = EmailField(name="email",label="Email", validators=[validators.InputRequired()], render_kw={"class":"w-full"})
-    phone = StringField(name="phone",label="Phone", validators=[validators.InputRequired()], render_kw={"class":"w-full"})
+    phone_number = StringField(name="phone", label="Phone", validators=[validators.InputRequired()], render_kw={"class": "w-full"})
     password = PasswordField(name='password', label='Password',
                              validators=[validators.Length(min=5), validators.InputRequired()],
                              render_kw={"class":"w-full"})
-    passwordAgain = PasswordField(name='passwordAgain', label='Password again, to be sure',
-                                  validators=[validators.Length(min=5),
+    password_again = PasswordField(name='passwordAgain', label='Password again, to be sure',
+                                   validators=[validators.Length(min=5),
                                               validators.InputRequired()],
-                                  render_kw={"class": "w-full"})
+                                   render_kw={"class": "w-full"})
+
+class EditUserForm(FlaskForm):
+    login_name = StringField(name='login', label='Username',
+                             validators=[validators.Length(min=4, max=30), validators.InputRequired()],
+                             render_kw={"class": "w-full"})
+    first_name = StringField(name="firstname", label="Firstname", validators=[validators.InputRequired()],
+                             render_kw={"class": "w-full"})
+    last_name = StringField(name="lastname", label="Lastname", validators=[validators.InputRequired()],
+                            render_kw={"class": "w-full"})
+    email = EmailField(name="email", label="Email", validators=[validators.InputRequired()],
+                       render_kw={"class": "w-full"})
+    phone_number = StringField(name="phone", label="Phone", validators=[validators.InputRequired()],
+                               render_kw={"class": "w-full"})
+    role = SelectField(label="Role")
+    is_deactivated = BooleanField(label="Is deactivated")
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if self.role.choices is None:
+            self.role.choices = UserService.get_role_choices()
 
 
-class BikeForm(FlaskForm):
+class AddBikeForm(FlaskForm):
     name = StringField(
         label="Bike name",
         validators=[validators.InputRequired()]
@@ -32,7 +55,7 @@ class BikeForm(FlaskForm):
     description = StringField(label="Description",validators=[validators.InputRequired()])
     image = FileField(
         label="Image",
-        validators=[FileAllowed(["jpg","jpeg"])],
+        validators=[FileAllowed(["jpg","jpeg"]),FileRequired()],
         render_kw={"accept":".jpg,.jpeg"}
     )
     weight = IntegerField(label="Weight",validators=[validators.InputRequired()])
@@ -41,17 +64,13 @@ class BikeForm(FlaskForm):
     body_material = StringField(label="Body material",validators=[validators.InputRequired()])
     gear_number = IntegerField(label="Gear number",validators=[validators.InputRequired()])
     weight_limit = IntegerField(label="Weight limit",validators=[validators.InputRequired()])
-    is_available = BooleanField(label="Is available",validators=[validators.InputRequired()])
+
+
+class EditBikeForm(AddBikeForm):
+    is_available = BooleanField(label="Is available")
     is_shown = BooleanField(label="Is shown")
-
-    def __init__(self, edit: bool, **kwargs):
-        super().__init__(**kwargs)
-        print(self.image.render_kw,self.image.validators)
-        if not edit and not any([isinstance(v,FileRequired) for v in self.image.validators]):
-            self.image.validators.append(FileRequired())
-        elif edit and any([isinstance(v,FileRequired) for v in self.image.validators]):
-            for v in [v for v in self.image.validators if isinstance(v,FileRequired)]:
-                self.image.validators.remove(v)
-        print(self.image.render_kw,self.image.validators)
-
-
+    image = FileField(
+        label="Image",
+        validators=[FileAllowed(["jpg", "jpeg"])],
+        render_kw={"accept": ".jpg,.jpeg"}
+    )

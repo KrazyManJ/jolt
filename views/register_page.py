@@ -11,17 +11,13 @@ register_page = Blueprint('register_page', __name__)
 def page():
     form = RegisterForm()
     if request.method == "POST":
-        user = request.form
-        if user["password"] == user["passwordAgain"]:
-            UserService.register(
-                user["login"],
-                user["firstname"],
-                user["lastname"],
-                user["email"],
-                user["phone"],
-                user["password"]
-            )
+        if form.password.data == form.password_again.data:
+            input_data = form.data
+            input_data.pop("password_again")
+            input_data.pop("csrf_token")
+            UserService.register(**input_data)
+            flash("Successfully registered!",category="success")
+            flash("Please log in.",category="info")
             return redirect(url_for("login_page.page"))
         flash("Passwords do not match",category="error")
-        return render_template("register_page/page.jinja", form=form)
     return render_template("register_page/page.jinja", form=form)

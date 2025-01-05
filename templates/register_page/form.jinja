@@ -1,13 +1,14 @@
 <h1 class="text-xl  font-bold mb-1">Register</h1>
 <form method="post">
-    {{ form_field(form.login) }}
-    {{ form_field(form.firstname) }}
-    {{ form_field(form.lastname) }}
+    {{ form.hidden_tag() }}
+    {{ form_field(form.login_name) }}
+    {{ form_field(form.first_name) }}
+    {{ form_field(form.last_name) }}
     {{ form_field(form.email) }}
-    {{ form_field(form.phone) }}
+    {{ form_field(form.phone_number) }}
     <hr class="border-3 border-titan-500 my-5">
     {{ form_field(form.password) }}
-    {{ form_field(form.passwordAgain) }}
+    {{ form_field(form.password_again) }}
     <div class="flex justify-end gap-20">
         <div class="mt-4 mb-1">{{ form_cancel(redirect=url_for('index.page')) }}</div>
         <div class="mt-4 mb-1">{{ form_submit("Register") }}</div>

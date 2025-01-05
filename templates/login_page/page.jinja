@@ -6,7 +6,7 @@
 {% block body %}
     <div class="min-h-full flex justify-center items-center flex-col grow">
         {% include 'login_page/form.jinja' %}
-        <div>Don't have an account, don't worry create a new one
+        <div class="mt-1">Don't have an account, don't worry create a new one
             <a href="{{ url_for("register_page.page") }}">here</a>
         </div>
     </div>

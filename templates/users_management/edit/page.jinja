@@ -1,0 +1,22 @@
+{% extends '__page.jinja' %}
+{% from 'macros/form.jinja' import form_field, form_submit, form_cancel %}
+
+{% block title %}
+    Users management
+{% endblock %}
+{% block body %}
+    <div class="grow flex justify-center items-center">
+	    <form method="post" class="bg-titan-100 p-4 gap-1 w-60 rounded-md">
+            {{ form.hidden_tag() }}
+            {{ form_field(form.login_name) }}
+            {{ form_field(form.first_name) }}
+            {{ form_field(form.last_name) }}
+            {{ form_field(form.email) }}
+            {{ form_field(form.phone_number) }}
+            {{ form_field(form.role) }}
+            {{ form_field(form.is_deactivated) }}
+            {{ form_submit("Edit user") }}
+            {{ form_cancel(url_for("users_management.page")) }}
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends '__page.jinja' %}
+
+{% block title %}
+    Users management
+{% endblock %}
+{% block body %}
+    <table class="border-collapse border border-titan-400 mt-8">
+        <tr>
+            <th>ID</th>
+            <th>Login name</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Is deactivated</th>
+            <th>Role name</th>
+            <th>Tools</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td class="px-4 border border-titan-400">{{ user.user_id }}</td>
+                <td class="px-4 border border-titan-400">{{ user.login_name }}</td>
+                <td class="px-4 border border-titan-400">{{ user.first_name }}</td>
+                <td class="px-4 border border-titan-400">{{ user.last_name }}</td>
+                <td class="px-4 border border-titan-400">{{ user.email }}</td>
+                <td class="px-4 border border-titan-400">{{ user.phone_number }}</td>
+                <td class="px-4 border border-titan-400">{{ user.is_deactivated }}</td>
+                <td class="px-4 border border-titan-400">{{ user.name }}</td>
+                <td class="px-4 border border-titan-400">
+                    <a href="{{ url_for("users_management.edit_page", user_id=user.user_id) }}">
+                        <img class="min-w-6 min-h-6 h-6 w-6" src="{{ url_for('static', filename='img/pencil.svg') }}">
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}

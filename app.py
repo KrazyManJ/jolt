@@ -1,6 +1,7 @@
 from flask import Flask
 from livereload import Server
 
+from views.users_management import users_management
 from views.bikes_management import bikes
 from views.borrow import borrow
 from views.index import index
@@ -21,6 +22,7 @@ app.register_blueprint(login_page, url_prefix='/login')
 app.register_blueprint(register_page, url_prefix='/register')
 app.register_blueprint(logout_v, url_prefix='/logout')
 app.register_blueprint(borrow, url_prefix='/borrow')
+app.register_blueprint(users_management, url_prefix='/users-management')
 
 
 if __name__ == '__main__':

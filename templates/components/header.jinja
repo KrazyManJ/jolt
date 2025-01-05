@@ -10,13 +10,24 @@
                     <img alt="" class="h-7" src="{{ url_for('static', filename='img/wrench.svg') }}">
                 </a>
             {% endif %}
+            {% if session['role'] == "admin" %}
+                <a href="{{ url_for('users_management.page') }}">
+                    <img alt="" class="h-7" src="{{ url_for('static', filename='img/book-user.svg') }}">
+                </a>
+            {% endif %}
             <a
                 {% if session['authenticated'] %}
                    href="{{ url_for('user_profile.page') }}"
                 {% else %}
                    href="{{ url_for('login_page.page') }}"
                 {% endif %}
+            class="flex align-center justify-center gap-1"
             >
+                {% if session['authenticated'] %}
+                    <div class="hidden md:block mt-0.5 font-bold">
+                        {{ session['login_name'] }}
+                    </div>
+                {% endif %}
                 <img alt="" class="h-7"
                     {% if session['authenticated'] %}
                        src="{{ url_for('static', filename='img/user.svg') }}"
@@ -26,10 +37,10 @@
                 >
             </a>
             {% if session['authenticated'] %}
-            <a href="{{ url_for('logout_v.logout') }}">
-                <div class="h-7 w-7 bg-red-500"
-                     style="mask-image: url('{{ url_for('static', filename='img/log-out.svg') }}'); mask-repeat: no-repeat; mask-size: cover;"></div>
-            </a>
+                <a href="{{ url_for('logout_v.logout') }}">
+                    <div class="h-7 w-7 bg-red-500"
+                         style="mask-image: url('{{ url_for('static', filename='img/log-out.svg') }}'); mask-repeat: no-repeat; mask-size: cover;"></div>
+                </a>
             {% endif %}
         </div>
     </div>
