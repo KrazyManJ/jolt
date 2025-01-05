@@ -1,6 +1,6 @@
 from wtforms import validators
 from wtforms.fields.choices import SelectField
-from wtforms.fields.numeric import IntegerField
+from wtforms.fields.numeric import IntegerField, FloatField
 from wtforms.fields.simple import StringField, PasswordField, EmailField, BooleanField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_wtf import FlaskForm
@@ -26,18 +26,9 @@ class RegisterForm(FlaskForm):
                                               validators.InputRequired()],
                                    render_kw={"class": "w-full"})
 
-class EditUserForm(FlaskForm):
-    login_name = StringField(name='login', label='Username',
-                             validators=[validators.Length(min=4, max=30), validators.InputRequired()],
-                             render_kw={"class": "w-full"})
-    first_name = StringField(name="firstname", label="Firstname", validators=[validators.InputRequired()],
-                             render_kw={"class": "w-full"})
-    last_name = StringField(name="lastname", label="Lastname", validators=[validators.InputRequired()],
-                            render_kw={"class": "w-full"})
-    email = EmailField(name="email", label="Email", validators=[validators.InputRequired()],
-                       render_kw={"class": "w-full"})
-    phone_number = StringField(name="phone", label="Phone", validators=[validators.InputRequired()],
-                               render_kw={"class": "w-full"})
+class EditUserForm(RegisterForm):
+    password = None
+    password_again = None
     role = SelectField(label="Role")
     is_deactivated = BooleanField(label="Is deactivated")
 
@@ -64,6 +55,7 @@ class AddBikeForm(FlaskForm):
     body_material = StringField(label="Body material",validators=[validators.InputRequired()])
     gear_number = IntegerField(label="Gear number",validators=[validators.InputRequired()])
     weight_limit = IntegerField(label="Weight limit",validators=[validators.InputRequired()])
+    price = FloatField(label="Price",validators=[validators.InputRequired()])
 
 
 class EditBikeForm(AddBikeForm):

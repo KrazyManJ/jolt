@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS roles;
 
 DROP TABLE IF EXISTS bike_prices;
 
+PRAGMA foreign_keys = ON;
+
 CREATE TABLE roles (
     role_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
@@ -213,8 +215,8 @@ CREATE TABLE bike_prices (
     bike_price_id INTEGER PRIMARY KEY AUTOINCREMENT,
     bike_id INTEGER NOT NULL,
     price REAL NOT NULL,
-    datetime DATETIME NOT NULL,
-    FOREIGN KEY (bike_id) REFERENCES bikes (bike_id)
+    datetime DATETIME DEFAULT (datetime('now','localtime')),
+    FOREIGN KEY (bike_id) REFERENCES bikes (bike_id) ON DELETE CASCADE
 );
 
 INSERT INTO bike_prices (bike_id, price, datetime)

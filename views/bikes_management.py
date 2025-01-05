@@ -28,7 +28,9 @@ def add_page():
                 input_data = form.data
                 input_data["image"] = base64.b64encode(file.read()).decode('utf-8')
                 input_data.pop('csrf_token')
-                BikeService.add_bike(**input_data)
+                price = input_data.pop("price")
+                bike_id = BikeService.add_bike(**input_data)
+                BikeService.add_bike_price(bike_id, price)
                 flash("Successfully added bike.",category="success")
                 return redirect(url_for("bikes_management.page"))
     return render_template("bikes_management/add_or_edit/page.jinja", form=form, id=None)
@@ -67,12 +69,17 @@ def edit_page(bike_id: int):
             else:
                 input_data["image"] = data.get("image")
             input_data.pop('csrf_token')
+            price = input_data.pop('price')
             BikeService.edit_bike_by_id(bike_id,**input_data)
+            if price != data["price"]:
+                BikeService.add_bike_price(bike_id, price)
             flash(f"Successfully edited bike with id '{bike_id}'.", category="success")
             return redirect(url_for("bikes_management.page"))
 
     data.pop("bike_id")
     data.pop("image")
+    data.pop("bike_price_id")
+    data.pop("datetime")
     for key in data.keys():
         form.__getattribute__(key).data = data[key]
     return render_template("bikes_management/add_or_edit/page.jinja", form=form, id=bike_id)

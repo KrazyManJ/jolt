@@ -14,7 +14,12 @@ class BikeService:
     @staticmethod
     def get_all():
         db = get_db()
-        return db.execute("SELECT * FROM bikes").fetchall()
+        return db.execute("""
+        SELECT *
+            FROM bikes b
+                     JOIN bike_prices USING (bike_id)
+            WHERE datetime = (SELECT datetime FROM bike_prices WHERE bike_id = b.bike_id ORDER BY datetime DESC LIMIT 1)
+        """).fetchall()
 
     @staticmethod
     def get_by_id_for_borrow(bike_id):
@@ -75,8 +80,9 @@ class BikeService:
     def add_bike(name,description,image ,weight, body_size, wheel_size, body_material, gear_number, weight_limit):
         db = get_db()
         sql = f"INSERT INTO bikes (name, description, image, weight, body_size, wheel_size, body_material, gear_number, weight_limit) VALUES ({','.join(['?']*9)})"
-        db.execute(sql,(name,description,image ,weight, body_size, wheel_size, body_material, gear_number, weight_limit))
+        bike_id = db.execute(sql,(name,description,image ,weight, body_size, wheel_size, body_material, gear_number, weight_limit)).lastrowid
         db.commit()
+        return bike_id
 
     @staticmethod
     def is_bike_with_id(bike_id: int):
@@ -92,7 +98,7 @@ class BikeService:
     @staticmethod
     def get_bike_by_id(bike_id: int):
         db = get_db()
-        return db.execute("SELECT * FROM bikes WHERE bike_id = ?",(bike_id,)).fetchone()
+        return db.execute("SELECT * FROM bikes JOIN bike_prices USING(bike_id) WHERE bike_id = ? ORDER BY datetime DESC LIMIT 1",(bike_id,)).fetchone()
 
     @staticmethod
     def edit_bike_by_id(bike_id: int, name,description,image ,weight, body_size, wheel_size, body_material, gear_number, weight_limit, is_available, is_shown):
@@ -100,4 +106,10 @@ class BikeService:
         sql = "UPDATE bikes SET name=?,description=?,image=?,weight=?,body_size=?,wheel_size=?,body_material=?,gear_number=?,weight_limit=?,is_available=?,is_shown=? WHERE bike_id = ?"
         params = [name,description,image,weight,body_size,wheel_size,body_material,gear_number,weight_limit,is_available,is_shown,bike_id]
         db.execute(sql,params)
+        db.commit()
+
+    @staticmethod
+    def add_bike_price(bike_id: int, price: int):
+        db = get_db()
+        db.execute("INSERT INTO bike_prices (bike_id, price) VALUES (?,?)",(bike_id,price))
         db.commit()
