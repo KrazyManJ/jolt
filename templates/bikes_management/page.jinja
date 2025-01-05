@@ -42,7 +42,7 @@
             <td class="px-2 border border-titan-400">
                 <div class="flex justify-center gap-2">
                     <a href="{{ url_for("bikes_management.edit_page", bike_id=bike.bike_id) }}">
-                        <img class="h-6 w-6" src="{{ url_for('static', filename='img/pencil.svg') }}">
+                        <img class="min-w-6 min-h-6 h-6 w-6" src="{{ url_for('static', filename='img/pencil.svg') }}">
                     </a>
                     <a href="{{ url_for("bikes_management.remove", bike_id=bike.bike_id) }}">
                         <div class="h-6 w-6 bg-red-500"

@@ -9,8 +9,16 @@
     <script src="https://cdn.tailwindcss.com/3.4.15"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <title>{% block title %}{% endblock %} | Jolt</title>
+    <style>
+        @font-face {
+            font-family: "Inter";
+            src:
+                url("{{ url_for('static', filename='fonts/inter_variable.ttf') }}");
+                url("{{ url_for('static', filename='fonts/inter_italic_variable.ttf') }}");
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col m-0 w-full">
+<body class="min-h-screen max-w-full flex flex-col m-0 w-full">
     {% include 'components/header.jinja' %}
     {% if request.endpoint == 'index.page' %}
     	{% include 'components/banner.jinja' %}

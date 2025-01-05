@@ -70,24 +70,3 @@ input[type=checkbox] {
 .bikes-grid > * {
   min-width: 200px;
 }
-
-/*# sourceMappingURL=styles.css.map */
-
-input[type=checkbox] {
-  accent-color: var(--col-primary);
-  min-height: 1rem;
-  margin-right: 0.3rem;
-}
-
-.filter-label {
-  margin-right: 0.4rem;
-}
-
-.filter {
-  display: flex;
-  flex-grow: 1;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-/*# sourceMappingURL=styles.css.map */

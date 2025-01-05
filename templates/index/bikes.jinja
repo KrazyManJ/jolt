@@ -2,17 +2,13 @@
     {% for bike in bikes %}
         <div class="w-full border border-titan-500 rounded p-2">
             <img src="data:image/jpeg;base64,{{ bike.image }}" alt="">
-{#            {{ bike.name }} - {{ bike.description }} -#}
-{#            {{ bike.weight }} kg - {{ bike.body_size }} -#}
-{#            {{ bike.wheel_size }} - {{ bike.body_material }} -#}
-{#            {{ bike.gear_number }} - {{ bike.weight_limit }} kg -#}
-{#            {{ bike.is_available }}#}
-            <h3 class="text-center text-lg font-bold">{{ bike.name }}</h3>
+            <h3 class="text-center text-xl font-bold">{{ bike.name }}</h3>
             <p class="text-titan-400 text-sm">{{ bike.description }}</p>
+            <div class="text-right mt-4 text-2xl font-bold">{{ bike.price }} CZK/day</div>
             <div class="mt-4 flex justify-end">
                 {% if bike.is_available %}
                     <a href="{{ url_for("borrow.page", id=bike.bike_id) }}"
-                       class="p-1 px-4 bg-primary-500 text-titan-50 rounded">Borrow
+                       class="p-1 px-4 bg-primary-500 text-titan-50 rounded no-underline">Borrow
                     </a>
                 {% else %}
                     Not available

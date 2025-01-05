@@ -3,9 +3,9 @@
 {% block title %}Homepage{% endblock %}
 
 {% block body %}
-	<h1 class="text-2xl font-bold">Our sortiment</h1>
-    <form method="post">
-        <div class="border-2 border-titan-600 rounded-md p-1">
+	<h1 class="text-3xl mb-4 font-bold">Our sortiment</h1>
+    <form method="get">
+        <div class="border border-titan-600 rounded-md p-1">
                 <input type="search" action="/" name="search"
                    class="bg-[url('{{ url_for('static', filename="img/search.svg") }}')]
                    bg-no-repeat bg-left bg-[length:1.5rem_1rem] pl-7 focus:outline-none
@@ -15,7 +15,7 @@
                    {% endif %}
                    onblur="search()">
         </div>
-        <div class="flex gap-4 mt-4">
+        <div class="flex gap-8 mt-8 flex-col md:flex-row">
             {% include 'index/filter.jinja' %}
             {% include 'index/bikes.jinja' %}
         </div>
