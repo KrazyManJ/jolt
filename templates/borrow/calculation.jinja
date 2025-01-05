@@ -3,32 +3,44 @@
      <hr>
      <div class="flex flex-col">
          <span><label>Date from:</label> <label name="today"></label></span>
-         <span><label>Date to:</label> <input name="to" onchange="calc()" class="border-2"
+         <span><label>Date to:</label> <input name="to" onchange="calc()" onblur="calc()" class="border-2"
                                               type="datetime-local"></span>
-         <hr class="mb-1">
+         <hr class="my-1">
          <span><label>Price per day:</label> {{ bike.price }} Kč</span>
          <span><label name="days"></label></span>
-         <span>
-
+         <span class="mt-1">
+            <label>To pay:</label>
          </span>
      </div>
     <script>
-        window.onload = function() {
+        function todaysDate() {
                 var currentDate = new Date();
-                var formattedDate = currentDate.toLocaleString();
-                var dateLabel = document.querySelector('label[name="today"]');
-                dateLabel.innerHTML = formattedDate;
+                var day = ('0' + currentDate.getDate()).slice(-2);
+                var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+                var year = currentDate.getFullYear();
+                var hours = ('0' + currentDate.getHours()).slice(-2);
+                var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+                var formattedDate = day + '.' + month + '.' + year;
+                var formattedTime = hours + ':' + minutes
+                let dateLabel = document.querySelector('label[name="today"]');
+                dateLabel.innerHTML = formattedDate + " " + formattedTime;
         };
 
+        window.onload = todaysDate();
+
         function calc(){
+            todaysDate();
             let to_value = new Date(document.getElementsByName("to")[0].value)
             let from_value = new Date()
             let daysLabel = document.querySelector('label[name="days"]')
             diffInMs = to_value - from_value;
-            var diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-            diffInMs -= diffInDays * (1000 * 60 * 60 * 24);
-            var diffInHours = Math.ceil(diffInMs / (1000 * 60 * 60)); // Změna na Math.ceil
-            daysLabel.innerHTML = "Period: " + diffInDays + " days " + diffInHours + " hours";
+            let diffInDays = (diffInMs/1000)/60/60/24;
+            let diffInHo = Math.ceil((diffInDays - Math.trunc(diffInDays))*24)
+            if (diffInHo == 24){
+                diffInHo = 0
+                diffInDays++;
+            }
+            daysLabel.innerHTML = "Period: " + Math.trunc(diffInDays) + " days " + diffInHo + " hours";
         }
     </script>
 </div>
