@@ -1,0 +1,49 @@
+{% extends '__page.jinja' %}
+
+{% block title %}
+    {{ bike.name }}
+{% endblock %}
+{% block body %}
+    <div class="w-full grow flex items-center justify-center">
+        <div>
+            <img width="400" src="data:image/jpeg;base64,{{ bike.image }}" alt="">
+        </div>
+        <div class="w-96">
+            <h1 class="text-4xl text-titan-950 mb-4 font-bold">{{ bike.name }}</h1>
+            <div class="text-justify text-titan-600">{{ bike.description }}</div>
+
+            <table class="border-collapse border mt-8 w-full">
+                <tr>
+                    <td class="p-1 pr-8">Weight</td>
+                    <td class="p-1">{{ bike.weight }}kg</td>
+                </tr>
+                <tr class="bg-titan-100">
+                    <td class="p-1 pr-8">Body size</td>
+                    <td class="p-1">{{ bike.body_size }}cm</td>
+                </tr>
+                <tr>
+                    <td class="p-1 pr-8 ">Wheel size</td>
+                    <td class="p-1">{{ bike.wheel_size }}cm</td>
+                </tr>
+                <tr class="bg-titan-100">
+                    <td class="p-1 pr-8">Body material</td>
+                    <td class="p-1">{{ bike.body_material }}</td>
+                </tr>
+                <tr>
+                    <td class="p-1 pr-8">Number of gears</td>
+                    <td class="p-1">{{ bike.gear_number }}</td>
+                </tr>
+                <tr class="bg-titan-100">
+                    <td class="p-1 pr-8">Weight limit</td>
+                    <td class="p-1">{{ bike.weight_limit }}kg</td>
+                </tr>
+            </table>
+
+{#            <div>{{ bike.is_available }}</div>#}
+            <div class="mt-5 font-bold text-xl text-right">{{ bike.price }} CZK/day</div>
+            <a class="mt-2 block p-4 text-center no-underline rounded w-full text-titan-50 bg-primary-500" href="{{ url_for("borrow.page", id=bike.bike_id) }}">
+                Borrow
+            </a>
+        </div>
+    </div>
+{% endblock %}

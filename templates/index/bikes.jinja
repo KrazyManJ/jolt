@@ -1,6 +1,6 @@
 <div class="bikes-grid gap-4 w-full">
     {% for bike in bikes %}
-        <div class="w-full border border-titan-500 rounded p-2">
+        <div onclick="window.location.href= '{{ url_for("bike_details.page", bike_id=bike.bike_id) }}'" class="cursor-pointer w-full border border-titan-500 rounded p-2">
             <img src="data:image/jpeg;base64,{{ bike.image }}" alt="">
             <h3 class="text-center text-xl font-bold">{{ bike.name }}</h3>
             <p class="text-titan-400 text-sm">{{ bike.description }}</p>
