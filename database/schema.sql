@@ -1,10 +1,12 @@
+DROP TABLE IF EXISTS borrows;
+
+DROP TABLE IF EXISTS bike_prices;
+
 DROP TABLE IF EXISTS bikes;
 
 DROP TABLE IF EXISTS users;
 
 DROP TABLE IF EXISTS roles;
-
-DROP TABLE IF EXISTS bike_prices;
 
 PRAGMA foreign_keys = ON;
 
@@ -215,7 +217,7 @@ CREATE TABLE bike_prices (
     bike_price_id INTEGER PRIMARY KEY AUTOINCREMENT,
     bike_id INTEGER NOT NULL,
     price REAL NOT NULL,
-    datetime DATETIME DEFAULT (datetime('now','localtime')),
+    datetime DATETIME DEFAULT (datetime('now','localtime')) NOT NULL,
     FOREIGN KEY (bike_id) REFERENCES bikes (bike_id) ON DELETE CASCADE
 );
 
@@ -232,3 +234,14 @@ VALUES
     (9, 100.50, '2026-01-01 10:00:00'),
     (10, 100.50, '2026-01-01 10:00:00')
 ;
+
+CREATE TABLE borrows (
+    borrow_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bike_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    datetime_from DATETIME DEFAULT (datetime('now','localtime')) NOT NULL,
+    datetime_to DATETIME NOT NULL,
+    payment_method TEXT NOT NULL,
+    FOREIGN KEY (bike_id) REFERENCES bikes (bike_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
+);

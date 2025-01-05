@@ -1,46 +1,63 @@
 <div class="gap-2 flex flex-col justify-start h-max">
      <h2 class="font-bold text-2xl">Other details</h2>
      <hr>
-     <div class="flex flex-col">
-         <span><label>Date from:</label> <label name="today"></label></span>
-         <span><label>Date to:</label> <input name="to" onchange="calc()" onblur="calc()" class="border-2"
-                                              type="datetime-local"></span>
-         <hr class="my-1">
-         <span><label>Price per day:</label> {{ bike.price }} Kč</span>
-         <span><label name="days"></label></span>
-         <span class="mt-1">
-            <label>To pay:</label>
-         </span>
-     </div>
+     <form method="post" class="flex flex-col">
+             <span><label for="today">Date from:</label>
+                 <label name="today"></label>
+             </span>
+             <span><label>Date to:</label> <input name="to" onblur="calc()"
+                                                  class="border-2"
+                                                  type="datetime-local"></span>
+             <hr class="my-1">
+             <span><label>Price:</label> {{ bike.price }} Kč/day</span>
+             <span><label name="days"></label></span>
+             <span class="mt-1.5">
+                <label>To pay:</label> <label name="to_pay"></label>
+             </span>
+             <hr class="my-1">
+             <span>
+                <label>Chosen method:</label>
+                 <select name="payment_method">
+                     <option>Credit/Debit card</option>
+                     <option>Google pay/Apple pay</option>
+                     <option>Payment to account</option>
+                     <option>By cash</option>
+                 </select>
+             </span>
+             <span class="flex justify-end">
+                <input type="submit" class="bg-primary px-2 py-2 rounded-md text-white mt-2
+                text-sm" value="Confirm">
+             </span>
+     </form>
     <script>
         function todaysDate() {
                 var currentDate = new Date();
-                var day = ('0' + currentDate.getDate()).slice(-2);
-                var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-                var year = currentDate.getFullYear();
-                var hours = ('0' + currentDate.getHours()).slice(-2);
-                var minutes = ('0' + currentDate.getMinutes()).slice(-2);
-                var formattedDate = day + '.' + month + '.' + year;
-                var formattedTime = hours + ':' + minutes
                 let dateLabel = document.querySelector('label[name="today"]');
-                dateLabel.innerHTML = formattedDate + " " + formattedTime;
+                let dateToInput = document.querySelector('input[name="to"]')
+                let formattedDate = currentDate.toLocaleDateString("cs-CZ", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+                dateLabel.innerHTML = formattedDate;
+                dateToInput.min = currentDate
         };
 
         window.onload = todaysDate();
 
         function calc(){
             todaysDate();
-            let to_value = new Date(document.getElementsByName("to")[0].value)
+            let to_value = new Date(document.querySelector('input[name="to"]').value)
             let from_value = new Date()
             let daysLabel = document.querySelector('label[name="days"]')
+            let toPaylabel = document.querySelector('label[name="to_pay"]')
             diffInMs = to_value - from_value;
             let diffInDays = (diffInMs/1000)/60/60/24;
             let diffInHo = Math.ceil((diffInDays - Math.trunc(diffInDays))*24)
-            if (diffInHo == 24){
+            if (diffInHo == 24) {
                 diffInHo = 0
                 diffInDays++;
             }
-            daysLabel.innerHTML = "Period: " + Math.trunc(diffInDays) + " days " + diffInHo + " hours";
+            daysLabel.innerHTML = "Period: " + Math.trunc(diffInDays) + " days " + diffInHo
+                + " hours";
+            toPaylabel.innerHTML = (Math.ceil(({{ bike.price }}/24 *
+                (Math.trunc(diffInDays)*24+diffInHo))*100)/100)+" Kč"
         }
     </script>
 </div>

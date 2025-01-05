@@ -7,7 +7,7 @@
             <div class="text-right mt-4 text-2xl font-bold">{{ bike.price }} CZK/day</div>
             <div class="mt-4 flex justify-end">
                 {% if bike.is_available %}
-                    <a href="{{ url_for("borrow.page", id=bike.bike_id) }}"
+                    <a href="{{ url_for("borrow.page", bike_id=bike.bike_id) }}"
                        class="p-1 px-4 bg-primary-500 text-titan-50 rounded no-underline">Borrow
                     </a>
                 {% else %}
