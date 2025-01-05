@@ -23,6 +23,5 @@ def page():
             )
             return redirect(url_for("login_page.page"))
         flash("Passwords do not match",category="error")
-        form.fill_after_fail_attempt(user)
         return render_template("register_page/page.jinja", form=form)
     return render_template("register_page/page.jinja", form=form)

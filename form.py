@@ -1,15 +1,15 @@
-from wtforms import Form, validators
-from wtforms.fields.numeric import IntegerField, FloatField
+from wtforms import validators
+from wtforms.fields.numeric import IntegerField
 from wtforms.fields.simple import StringField, PasswordField, EmailField, BooleanField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_wtf import FlaskForm
 
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     login = StringField(name='login', label='Username', validators=[validators.Length(min=4, max=30), validators.InputRequired()], render_kw={"class":"w-full"})
     password = PasswordField(name='password', label='Password', validators=[validators.Length(min=5), validators.InputRequired()], render_kw={"class":"w-full"})
 
-class RegisterForm(Form):
+class RegisterForm(FlaskForm):
     login = StringField(name='login', label='Username', validators=[validators.Length(min=4, max=30), validators.InputRequired()], render_kw={"class":"w-full"})
     firstname = StringField(name="firstname",label="Firstname", validators=[validators.InputRequired()], render_kw={"class":"w-full"})
     lastname = StringField(name="lastname",label="Lastname", validators=[validators.InputRequired()], render_kw={"class":"w-full"})
@@ -23,12 +23,6 @@ class RegisterForm(Form):
                                               validators.InputRequired()],
                                   render_kw={"class": "w-full"})
 
-    def fill_after_fail_attempt(self, userInput):
-        self.login.data = userInput['login']
-        self.firstname.data = userInput['firstname']
-        self.lastname.data = userInput['lastname']
-        self.email.data = userInput['email']
-        self.phone.data = userInput['phone']
 
 class BikeForm(FlaskForm):
     name = StringField(
