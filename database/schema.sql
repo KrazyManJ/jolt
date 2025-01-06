@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS borrows;
 
+DROP TABLE IF EXISTS bike_services;
+
 DROP TABLE IF EXISTS bike_prices;
 
 DROP TABLE IF EXISTS bikes;
@@ -244,4 +246,22 @@ CREATE TABLE borrows (
     payment_method TEXT NOT NULL,
     FOREIGN KEY (bike_id) REFERENCES bikes (bike_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+CREATE TABLE service_state_types (
+    service_state_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL,
+    description TEXT NOT NULL
+);
+
+CREATE TABLE bike_services (
+    bike_service_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bike_id INTEGER NOT NULL,
+    service_state_type_id INTEGER NOT NULL,
+    datetime_from DATETIME DEFAULT (datetime('now','localtime')) NOT NULL,
+    datetime_to DATETIME NOT NULL,
+    reason TEXT NOT NULL,
+    price REAL NOT NULL,
+    FOREIGN KEY (bike_id) REFERENCES bikes (bike_id),
+    FOREIGN KEY (service_state_type_id) REFERENCES service_state_types (service_state_type_id)
 );

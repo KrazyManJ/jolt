@@ -1,0 +1,28 @@
+{% from 'macros/form.jinja' import form_field, form_submit, form_cancel %}
+
+{% extends '__page.jinja' %}
+
+{% block title %}
+    Add new service
+{% endblock %}
+{% block body %}
+    <div class="w-full grow flex items-center justify-center">
+        <form method="POST" enctype="multipart/form-data" class="p-4 rounded shadow-xl border bg-titan-200">
+            {{ form.hidden_tag() }}
+            {{ form_field(form.name_id) }}
+            {{ form_field(form.datetime_from) }}
+            {{ form_field(form.datetime_to) }}
+            {{ form_field(form.reason) }}
+            {{ form_field(form.price) }}
+            {{ form_field(form.state) }}
+            <div class="flex justify-evenly w-full">
+                {{ form_cancel(url_for("bikes_management.page")) }}
+                {% if not service_id %}
+                    {{ form_submit("Add") }}
+                {% else %}
+                    {{ form_submit("Edit") }}
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

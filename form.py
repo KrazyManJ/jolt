@@ -1,10 +1,16 @@
+from datetime import datetime
+
 from wtforms import validators
 from wtforms.fields.choices import SelectField
+from wtforms.fields.datetime import DateTimeField
 from wtforms.fields.numeric import IntegerField, FloatField
 from wtforms.fields.simple import StringField, PasswordField, EmailField, BooleanField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_wtf import FlaskForm
+from wtforms.validators import ValidationError
 
+from services.bike_service import BikeService
+from services.servicing_service import ServicingService
 from services.user_service import UserService
 
 
@@ -66,3 +72,32 @@ class EditBikeForm(AddBikeForm):
         validators=[FileAllowed(["jpg", "jpeg"])],
         render_kw={"accept": ".jpg,.jpeg"}
     )
+
+class ServiceForm(FlaskForm):
+    name_id = SelectField(
+        label="Bike",
+        validators=[validators.InputRequired()]
+    )
+    datetime_from = DateTimeField(label="From (dd.mm.yyyy h:m)",format="%d.%m.%Y %H:%M",
+                                  default=datetime.now(), validators=[validators.InputRequired()])
+    datetime_to = DateTimeField(label="To (dd.mm.yyyy h:m)",format="%d.%m.%Y %H:%M",
+                                validators=[validators.InputRequired()])
+    reason = StringField(label="Reason",validators=[validators.InputRequired()])
+    price = FloatField(label="Price",validators=[validators.InputRequired()])
+    state = SelectField(label="State",validators=[validators.InputRequired()])
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if self.name_id.choices is None:
+            choices = BikeService.get_all()
+            list_of_choices = []
+            for choice in choices:
+                list_of_choices.append(str(choice[0])+" - "+choice[1])
+            self.name_id.choices = list_of_choices
+        if self.state.choices is None:
+            choices = ServicingService.get_state_choices()
+            list_of_choices = []
+            for choice in choices:
+                list_of_choices.append(str(choice[1]) + " - " + choice[2])
+            self.state.choices = list_of_choices
+

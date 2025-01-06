@@ -20,5 +20,7 @@ def page(bike_id):
         BorrowService.borrow(bike_id,session['id'],datetime.fromisoformat(request.form['to']).strftime('%Y-%m-%d %H:%M:%S'),request.form['payment_method'])
         return redirect(url_for('index.page'))
     else:
-        bike = BikeService.get_bike_by_id(bike_id)
+        bike = BikeService.get_by_id_for_borrow(bike_id)
+        #Je to tady, protože to tahá jiný data, kdyby bylo potřeba, tak to zkusím předělat,
+        #ale teď už to nezvládnu 😅
         return render_template("borrow/page.jinja", bike=bike)
