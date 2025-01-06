@@ -23,7 +23,8 @@ def page():
             request.args.getlist("gear"),request.args.get('search'),request.args.get("bprice")
         )
     else:
-        show = BikeService.get_all_to_show()
+        show = BikeService.get_all()
+        print(show)
     filters = BikeService.get_filters()
     return render_template(
         'index/page.jinja', bikes=show, filters=filters, form=request.args)

@@ -2,11 +2,10 @@
 
 {% block body %}
     <div>
-        Profilecek <3
+        {% for borrow in borrows %}
+        	<div>{{ borrow.datetime_from }}</div>
+        	<div>{{ borrow.datetime_to }}</div>
+        {% endfor %}
+
     </div>
-    <a href="{{ url_for('logout_v.logout') }}">
-        <button>
-            Logout
-        </button>
-    </a>
 {% endblock %}

@@ -217,30 +217,30 @@ CREATE TABLE bike_prices (
     bike_price_id INTEGER PRIMARY KEY AUTOINCREMENT,
     bike_id INTEGER NOT NULL,
     price REAL NOT NULL,
-    datetime DATETIME DEFAULT (datetime('now','localtime')) NOT NULL,
+    datetime TEXT NOT NULL,
     FOREIGN KEY (bike_id) REFERENCES bikes (bike_id) ON DELETE CASCADE
 );
 
 INSERT INTO bike_prices (bike_id, price, datetime)
 VALUES
-    (1, 100.50, '2026-01-01 10:00:00'),
-    (2, 100.50, '2026-01-01 10:00:00'),
-    (3, 100.50, '2026-01-01 10:00:00'),
-    (4, 100.50, '2026-01-01 10:00:00'),
-    (5, 100.50, '2026-01-01 10:00:00'),
-    (6, 100.50, '2026-01-01 10:00:00'),
-    (7, 100.50, '2026-01-01 10:00:00'),
-    (8, 100.50, '2026-01-01 10:00:00'),
-    (9, 100.50, '2026-01-01 10:00:00'),
-    (10, 100.50, '2026-01-01 10:00:00')
+    (1, 100.50, '2025-01-01 10:00:00'),
+    (2, 100.50, '2025-01-01 10:00:00'),
+    (3, 100.50, '2025-01-01 10:00:00'),
+    (4, 100.50, '2025-01-01 10:00:00'),
+    (5, 100.50, '2025-01-01 10:00:00'),
+    (6, 100.50, '2025-01-01 10:00:00'),
+    (7, 100.50, '2025-01-01 10:00:00'),
+    (8, 100.50, '2025-01-01 10:00:00'),
+    (9, 100.50, '2025-01-01 10:00:00'),
+    (10, 100.50, '2025-01-01 10:00:00')
 ;
 
 CREATE TABLE borrows (
     borrow_id INTEGER PRIMARY KEY AUTOINCREMENT,
     bike_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
-    datetime_from DATETIME DEFAULT (datetime('now','localtime')) NOT NULL,
-    datetime_to DATETIME NOT NULL,
+    datetime_from TEXT NOT NULL,
+    datetime_to TEXT NOT NULL,
     payment_method TEXT NOT NULL,
     FOREIGN KEY (bike_id) REFERENCES bikes (bike_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)

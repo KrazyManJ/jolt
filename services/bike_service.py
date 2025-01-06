@@ -1,15 +1,9 @@
+from datetime import datetime
+
 from database.database import get_db
 
 
 class BikeService:
-    @staticmethod
-    def get_all_to_show():
-        db = get_db()
-        sql = ("SELECT bike_id,name,description,image,weight,body_size,"
-               "wheel_size, body_material, gear_number, "
-               "weight_limit, is_available, price  FROM bikes JOIN bike_prices USING(bike_id) "
-               "WHERE is_shown = 1 AND datetime >= DATETIME('now') ")
-        return db.execute(sql).fetchall()
 
     @staticmethod
     def get_all():
@@ -20,14 +14,6 @@ class BikeService:
                      JOIN bike_prices USING (bike_id)
             WHERE datetime = (SELECT datetime FROM bike_prices WHERE bike_id = b.bike_id ORDER BY datetime DESC LIMIT 1)
         """).fetchall()
-
-    @staticmethod
-    def get_by_id_for_borrow(bike_id):
-        db = get_db()
-        sql = ("SELECT bike_id, name, description, image, price FROM bikes JOIN bike_prices "
-               "USING(bike_id) WHERE bike_id = ? AND datetime >= DATETIME('now') ")
-        arguments = [bike_id]
-        return db.execute(sql, arguments).fetchone()
 
     @staticmethod
     def get_all_to_show_by_filter(availabilities, wmax, wlmax, bodies, wsizes, materials, gears,
@@ -118,5 +104,11 @@ class BikeService:
     @staticmethod
     def add_bike_price(bike_id: int, price: int):
         db = get_db()
-        db.execute("INSERT INTO bike_prices (bike_id, price) VALUES (?,?)",(bike_id,price))
+        current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        db.execute("INSERT INTO bike_prices (bike_id, price, datetime) VALUES (?,?,?)",(bike_id, price, current_datetime))
         db.commit()
+
+    @staticmethod
+    def was_bike_borrowed_by_id(bike_id):
+        db = get_db()
+        return bool(db.execute("SELECT EXISTS(SELECT * FROM bikes JOIN borrows USING(bike_id) WHERE bike_id = ?)",(bike_id,)).fetchone()[0])

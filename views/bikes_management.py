@@ -39,11 +39,13 @@ def add_page():
 @login_required
 @roles_required("employee")
 def remove(bike_id: int):
-    if BikeService.is_bike_with_id(bike_id):
-        BikeService.delete_bike_with_id(bike_id)
-        flash(f"Bike with id '{bikes}' successfully deleted.",category="success")
+    if not BikeService.is_bike_with_id(bike_id):
+        flash(f"Bike with id '{bike_id}' does not exist.",category="error")
+    elif BikeService.was_bike_borrowed_by_id(bike_id):
+        flash(f"Bike with id '{bike_id}' was already borrowed and cannot be removed.",category="error")
     else:
-        flash(f"Bike with id '{bikes}' does not exist.",category="error")
+        flash(f"Bike with id '{bike_id}' successfully deleted.",category="success")
+        BikeService.delete_bike_with_id(bike_id)
     return redirect(url_for("bikes_management.page"))
 
 @bikes.route('/<bike_id>/edit',methods=["GET","POST"])
@@ -52,7 +54,7 @@ def remove(bike_id: int):
 def edit_page(bike_id: int):
 
     if not BikeService.is_bike_with_id(bike_id):
-        flash(f"Bike with id '{bikes}' does not exist.", category="error")
+        flash(f"Bike with id '{bike_id}' does not exist.", category="error")
         return redirect(url_for("bikes_management.page"))
 
     form = EditBikeForm()
