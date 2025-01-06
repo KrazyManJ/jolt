@@ -1,0 +1,36 @@
+{% extends 'bikes_management/__page.jinja' %}
+
+{% block title %}Return reports{% endblock %}
+{% block content %}
+    <div class="my-2 px-10 w-full flex justify-end">
+        <a href="{{ url_for("bikes_management.return_reports.add_page") }}">
+            <img width="32" src="{{ url_for('static', filename='img/plus.svg') }}">
+        </a>
+    </div>
+    <table class="border-collapse border border-titan-500 w-full">
+        <tr>
+            <th>Bike name</th>
+            <th>Borrower login</th>
+            <th>Return time</th>
+            <th>State</th>
+            <th>Note by employee</th>
+            <th>Options</th>
+        </tr>
+            {% for return_report in return_reports %}
+            	<tr>
+                    <td class="p-1 border border-titan-500">{{ return_report.name }}</td>
+                    <td class="p-1 border border-titan-500">{{ return_report.login_name }}</td>
+                    <td class="p-1 border border-titan-500">{{ return_report.datetime_to }}</td>
+                    <td class="p-1 border border-titan-500">{{ return_report.label }}</td>
+                    <td class="p-1 border border-titan-500">{{ return_report.employee_note }}</td>
+                    <td class="p-1 border border-titan-500">
+                        <div class="flex items-center justify-center">
+                            <a href="{{ url_for("bikes_management.return_reports.edit_page", return_report_id=return_report.return_report_id) }}">
+                                <img class="min-w-6 min-h-6 h-6 w-6" src="{{ url_for('static', filename='img/pencil.svg') }}">
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+{% endblock %}

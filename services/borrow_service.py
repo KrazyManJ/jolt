@@ -33,4 +33,18 @@ class BorrowService:
             FROM borrows
             JOIN bikes USING(bike_id)
             ORDER BY datetime_from DESC
-        """)
+        """).fetchall()
+
+    @staticmethod
+    def get_choices_of_borrows_without_return_report():
+        db = get_db()
+        return [tuple(v) for v in
+            db.execute("""
+            SELECT borrow_id, CONCAT('(',login_name,') ',name,' - from ',datetime_from,' to ',datetime_to)
+            FROM borrows
+            LEFT JOIN return_reports USING(borrow_id)
+            JOIN bikes USING(bike_id)
+            JOIN users USING(user_id)
+            WHERE return_report_id IS NULL
+        """).fetchall()
+        ]

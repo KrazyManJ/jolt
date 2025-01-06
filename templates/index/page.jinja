@@ -10,8 +10,8 @@
                    class="bg-[url('{{ url_for('static', filename="img/search.svg") }}')]
                    bg-no-repeat bg-left bg-[length:1.5rem_1rem] pl-7 focus:outline-none
                    w-full" placeholder="Search for a bike..."
-                   {% if request.form.get('search') %}
-                        value="{{ request.form.get("search") }}"
+                   {% if request.args.get('search') %}
+                        value="{{ request.args.get("search") }}"
                    {% endif %}
                    onblur="search()">
         </div>

@@ -132,7 +132,32 @@ class BikeService:
     @staticmethod
     def is_bike_available(bike_id: int):
         db = get_db()
-        sql = "SELECT EXISTS(SELECT bike_id FROM bikes WHERE bike_id = ? AND is_available = 1)"
+        sql = """
+            WITH all_bikes AS (
+                SELECT b.bike_id, b.name, b.description, b.image, b.weight, b.body_size, b.wheel_size, b.body_material, b.gear_number, b.weight_limit, b.is_shown, bp.*, CASE
+                    WHEN DATETIME(CURRENT_TIMESTAMP, 'localtime') BETWEEN br.datetime_from AND br.datetime_to AND br.datetime_from IS NOT NULL THEN 0
+                    WHEN DATETIME(CURRENT_TIMESTAMP, 'localtime') BETWEEN bs.datetime_from AND bs.datetime_to AND bs.datetime_from IS NOT NULL THEN 0
+                    ELSE b.is_available
+                END AS is_available
+                FROM bikes b
+                LEFT JOIN borrows br USING(bike_id)
+                LEFT JOIN bike_services bs USING(bike_id)
+                JOIN bike_prices bp USING(bike_id)
+                WHERE (
+                    br.datetime_from = (SELECT datetime_from FROM borrows WHERE bike_id = b.bike_id ORDER BY datetime_from DESC LIMIT 1)
+                    OR
+                    br.datetime_from IS NULL
+                )
+                AND (
+                    bs.datetime_from = (SELECT datetime_from FROM bike_services WHERE bike_id = b.bike_id ORDER BY datetime_from DESC LIMIT 1)
+                    OR
+                    bs.datetime_from IS NULL
+                )
+                AND bp.datetime = (SELECT datetime FROM bike_prices WHERE bike_id = b.bike_id ORDER BY datetime DESC LIMIT 1)
+                AND b.is_shown = 1
+            )
+            SELECT EXISTS(SELECT bike_id FROM all_bikes WHERE bike_id = ? AND is_available = 1)
+        """
         arguments = [bike_id]
         return bool(db.execute(sql,arguments).fetchone()[0])
 

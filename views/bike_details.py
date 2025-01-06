@@ -9,4 +9,4 @@ def page(bike_id: int):
     bike = BikeService.get_bike_by_id(bike_id)
     if not bike:
         return redirect(url_for("index.page"))
-    return render_template("bike_details/page.jinja",bike=bike)
+    return render_template("bike_details/page.jinja",bike=bike,available=BikeService.is_bike_available(bike_id))

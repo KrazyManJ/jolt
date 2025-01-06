@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS return_reports;
+
 DROP TABLE IF EXISTS bike_state_types;
 
 DROP TABLE IF EXISTS bike_services;
@@ -292,10 +294,10 @@ VALUES
 
 CREATE TABLE bike_state_types (
     bike_state_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL
+    label TEXT NOT NULL
 );
 
-INSERT INTO bike_state_types (name)
+INSERT INTO bike_state_types (label)
 VALUES ('Without any damage'),('Slightly damaged'),('Highly damaged'),('Unridable');
 
 

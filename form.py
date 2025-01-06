@@ -4,12 +4,14 @@ from wtforms import validators
 from wtforms.fields.choices import SelectField
 from wtforms.fields.datetime import DateTimeField
 from wtforms.fields.numeric import IntegerField, FloatField
-from wtforms.fields.simple import StringField, PasswordField, EmailField, BooleanField
+from wtforms.fields.simple import StringField, PasswordField, EmailField, BooleanField, TextAreaField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_wtf import FlaskForm
 from wtforms.validators import ValidationError
 
 from services.bike_service import BikeService
+from services.borrow_service import BorrowService
+from services.return_report_service import ReturnReportService
 from services.servicing_service import ServicingService
 from services.user_service import UserService
 
@@ -100,3 +102,21 @@ class ServiceForm(FlaskForm):
             for choice in choices:
                 list_of_choices.append(str(choice[1]) + " - " + choice[2])
             self.state.choices = list_of_choices
+
+class EditReturnReportForm(FlaskForm):
+    bike_state_type_id = SelectField(label="Bike state",validators=[validators.InputRequired()])
+    employee_note = TextAreaField(label="Employee note",validators=[validators.InputRequired()], render_kw={"class": "w-full"})
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if not self.bike_state_type_id.choices:
+            self.bike_state_type_id.choices = ReturnReportService.get_bike_state_type_choices()
+
+class AddReturnReportForm(EditReturnReportForm):
+    borrow_id = SelectField(label="Borrow",validators=[validators.InputRequired()])
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.borrow_id.choices = BorrowService.get_choices_of_borrows_without_return_report()
+
+
