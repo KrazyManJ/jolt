@@ -24,3 +24,13 @@ class BorrowService:
             WHERE user_id = ?
             ORDER BY datetime_from DESC
         """,(user_id,)).fetchall()
+
+    @staticmethod
+    def get_all_borrows():
+        db = get_db()
+        return db.execute("""
+            SELECT *
+            FROM borrows
+            JOIN bikes USING(bike_id)
+            ORDER BY datetime_from DESC
+        """)

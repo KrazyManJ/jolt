@@ -1,0 +1,29 @@
+{% extends 'bikes_management/__page.jinja' %}
+
+{% block title %}Borrows{% endblock %}
+{% block content %}
+    <div>
+        <table class="w-full border-collapse border border-titan-400">
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Bike name</th>
+                <th>Borrow begins at</th>
+                <th>Borrow ends at</th>
+                <th>Payment method</th>
+            </tr>
+            {% for borrow in borrows %}
+                <tr>
+                    <td class=" border border-titan-500">
+                        <img width="48" src="data:image/jpeg;base64,{{ borrow.image }}" alt="">
+                    </td>
+                    <td class="p-1 border border-titan-500">{{ borrow.borrow_id }}</td>
+                    <td class="p-1 border border-titan-500">{{ borrow.name }}</td>
+                    <td class="p-1 border border-titan-500">{{ borrow.datetime_from }}</td>
+                    <td class="p-1 border border-titan-500">{{ borrow.datetime_to }}</td>
+                    <td class="p-1 border border-titan-500">{{ borrow.payment_method }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

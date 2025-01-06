@@ -1,5 +1,11 @@
-<aside class="border border-titan-600 rounded-md p-4 h-fit">
+<aside class="border border-titan-600 rounded-md h-fit">
+    <div class="p-4 flex items-center justify-between" onclick="toggleFilter()">
         <h1 class="text-lg font-bold">Filter</h1>
+        <div class="md:hidden">
+            <img id="filter-chevron" width="24" src="{{ url_for('static', filename="img/chevron-up.svg") }}">
+        </div>
+    </div>
+    <div id="filter-content" class="p-4 pt-0 hidden md:block">
         <hr>
         <h2 class="font-bold">Availability</h2>
         <div class="filter">
@@ -69,4 +75,14 @@
         <span class="flex justify-end"><button class="bg-primary px-2 py-2 my-1 rounded-md text-white
                                                         text-sm" type="submit">Apply</button>
         </span>
+    </div>
+    <script>
+        const toggleFilter = () => {
+            const content = document.getElementById("filter-content")
+            content.classList.toggle("hidden")
+            document.getElementById("filter-chevron").src = content.classList.contains("hidden")
+                ? "{{ url_for('static', filename="img/chevron-up.svg") }}"
+                : "{{ url_for('static', filename="img/chevron-down.svg") }}"
+        }
+    </script>
 </aside>
