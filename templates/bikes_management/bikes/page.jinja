@@ -1,13 +1,12 @@
-{% extends '__page.jinja' %}
+{% extends 'bikes_management/__page.jinja' %}
 
-{% block title %}
-    Bikes management
-{% endblock %}
-{% block body %}
-    <div class="my-10 px-10 w-full flex justify-end">
-        <a href="{{ url_for("bikes_management.add_page") }}">
-            <img src="{{ url_for('static', filename='img/plus.svg') }}">
-        </a>
+{% block title %}Bikes{% endblock %}
+{% block content %}
+    <h1 class="text-3xl"></h1>
+	<div class="my-2 px-10 w-full flex justify-end">
+    <a href="{{ url_for("bikes_management.bikes.add_page") }}">
+        <img width="32" src="{{ url_for('static', filename='img/plus.svg') }}">
+    </a>
     </div>
     <table class="border-collapse border border-titan-400">
         <tr>
@@ -27,7 +26,7 @@
             <th>Options</th>
         </tr>
     {% for bike in bikes %}
-    	<tr>
+        <tr>
             <td class="px-2 border border-titan-400">{{ bike.bike_id }}</td>
             <td class="px-2 border border-titan-400">{{ bike.name }}</td>
             <td class="px-2 border border-titan-400"><img src="data:image/jpeg;base64,{{ bike.image }}" alt="" class="w-10"></td>
@@ -43,10 +42,10 @@
             <td class="px-2 border border-titan-400">{{ bike.price }}</td>
             <td class="px-2 border border-titan-400">
                 <div class="flex justify-center gap-2">
-                    <a href="{{ url_for("bikes_management.edit_page", bike_id=bike.bike_id) }}">
+                    <a href="{{ url_for("bikes_management.bikes.edit_page", bike_id=bike.bike_id) }}">
                         <img class="min-w-6 min-h-6 h-6 w-6" src="{{ url_for('static', filename='img/pencil.svg') }}">
                     </a>
-                    <a href="{{ url_for("bikes_management.remove", bike_id=bike.bike_id) }}">
+                    <a href="{{ url_for("bikes_management.bikes.remove", bike_id=bike.bike_id) }}">
                         <div class="h-6 w-6 bg-red-500"
                              style="mask-image: url('{{ url_for('static', filename='img/trash.svg') }}'); mask-repeat: no-repeat; mask-size: cover;"></div>
                     </a>
@@ -55,5 +54,4 @@
         </tr>
     {% endfor %}
     </table>
-    {% include 'bikes_management/services.jinja' %}
 {% endblock %}

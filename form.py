@@ -100,4 +100,3 @@ class ServiceForm(FlaskForm):
             for choice in choices:
                 list_of_choices.append(str(choice[1]) + " - " + choice[2])
             self.state.choices = list_of_choices
-

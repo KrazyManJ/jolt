@@ -1,9 +1,8 @@
 from flask import Flask
-from livereload import Server
 
 from views.bike_details import bike_details
 from views.users_management import users_management
-from views.bikes_management import bikes
+from views.bikes_management import bikes_management
 from views.borrow import borrow
 from views.index import index
 from views.login_page import login_page
@@ -17,7 +16,7 @@ app.config['DEBUG'] = True
 app.config.from_object('config')
 database.init_app(app)
 app.register_blueprint(index, url_prefix='/')
-app.register_blueprint(bikes, url_prefix='/bikes-management')
+app.register_blueprint(bikes_management, url_prefix='/bikes-management')
 app.register_blueprint(user_profile, url_prefix='/user-profile')
 app.register_blueprint(login_page, url_prefix='/login')
 app.register_blueprint(register_page, url_prefix='/register')

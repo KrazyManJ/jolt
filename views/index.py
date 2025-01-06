@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect
 
 from services.bike_service import BikeService
-from views.bikes_management import bikes
 
 index = Blueprint('index', __name__)
 

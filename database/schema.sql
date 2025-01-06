@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS bike_state_types;
+
 DROP TABLE IF EXISTS bike_services;
 
 DROP TABLE IF EXISTS service_state_types;
@@ -287,3 +289,22 @@ VALUES
     (3,1,'2025-01-05 00:00:00','2025-01-09 00:00:00','reason',200),
     (4,1,'2025-01-01 00:00:00','2025-01-08 00:00:00','reason',200)
 ;
+
+CREATE TABLE bike_state_types (
+    bike_state_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+INSERT INTO bike_state_types (name)
+VALUES ('Without any damage'),('Slightly damaged'),('Highly damaged'),('Unridable');
+
+
+CREATE TABLE return_reports (
+    return_report_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    borrow_id INTEGER NOT NULL,
+    bike_state_type_id INTEGER NOT NULL,
+    employee_note TEXT NOT NULL,
+    FOREIGN KEY (borrow_id) REFERENCES borrows (borrow_id),
+    FOREIGN KEY (bike_state_type_id) REFERENCES bike_state_types (bike_state_type_id)
+)
+

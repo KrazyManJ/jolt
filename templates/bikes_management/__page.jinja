@@ -1,0 +1,28 @@
+{% extends '__page.jinja' %}
+
+{% macro link(endpoint, label) %}
+    <a class="{% if request.endpoint == endpoint %}font-bold{% endif %}" href="{{ url_for(endpoint) }}">
+        {{ label }}
+    </a>
+{% endmacro %}
+
+{% block body %}
+    <div class="flex grow gap-8">
+        <aside class="h-max border border-titan-500 rounded p-4">
+            <h1 class="text-xl mb-4">Bikes management</h1>
+            <div class="flex flex-col gap-2">
+                {{ link('bikes_management.statistics.page','Statistics') }}
+                {{ link('bikes_management.bikes.page','Bikes') }}
+{#                {{ link('bikes_management.borrows.page','Borrows') }}#}
+{#                {{ link('bikes_management.return_reports.page','Return reports') }}#}
+                {{ link('bikes_management.servising.page','Servising') }}
+            </div>
+        </aside>
+        <div>
+            <h1 class="text-3xl font-bold mb-6">{{ self.title() }}</h1>
+            {% block content %}
+            	
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

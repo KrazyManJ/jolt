@@ -24,7 +24,7 @@
                 {{ form_field(form.is_shown) }}
             {% endif %}
             <div class="flex justify-evenly w-full">
-                {{ form_cancel(url_for("bikes_management.page")) }}
+                {{ form_cancel(url_for("bikes_management.bikes.page")) }}
                 {% if id %}
                     {{ form_submit("Edit") }}
                 {% else %}

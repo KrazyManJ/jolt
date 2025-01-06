@@ -16,7 +16,7 @@
             {{ form_field(form.price) }}
             {{ form_field(form.state) }}
             <div class="flex justify-evenly w-full">
-                {{ form_cancel(url_for("bikes_management.page")) }}
+                {{ form_cancel(url_for("bikes_management.servising.page")) }}
                 {% if not service_id %}
                     {{ form_submit("Add") }}
                 {% else %}

@@ -1,4 +1,4 @@
-<header class="flex justify-center bg-titan-100 shadow-xl relative z-50">
+<header class="flex justify-center bg-titan-100 shadow-xl relative z-50 border-b border-titan-500">
     <div class="flex justify-between grow pt-2 pb-1 md:py-4 px-8 max-w-screen-xl">
         <a class="flex no-underline text-titan-950" href="{{ url_for('index.page') }}">
             <img alt="" class="h-8 mr-2" src="{{ url_for('static', filename='img/favicon.svg') }}">
@@ -6,7 +6,7 @@
         </a>
         <div class="flex mt-0.5 gap-8 md:gap-4">
             {% if session['role'] == "employee" %}
-                <a href="{{ url_for('bikes_management.page') }}">
+                <a href="{{ url_for('bikes_management.statistics.page') }}">
                     <img alt="" class="h-7" src="{{ url_for('static', filename='img/wrench.svg') }}">
                 </a>
             {% endif %}
