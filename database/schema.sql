@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS service_state_types;
-
 DROP TABLE IF EXISTS bike_services;
+
+DROP TABLE IF EXISTS service_state_types;
 
 DROP TABLE IF EXISTS borrows;
 
@@ -209,12 +209,12 @@ VALUES
         'Master bike',
         'This is our bike',
         (SELECT value FROM variables WHERE name = 'bike_img'),
-        20,
-        20,
-     20,
+        30,
+        40,
+     40,
      'metal',
      6,
-     120,
+     150,
      0
     )
 ;
@@ -238,7 +238,7 @@ VALUES
     (7, 100.50, '2025-01-01 10:00:00'),
     (8, 100.50, '2025-01-01 10:00:00'),
     (9, 100.50, '2025-01-01 10:00:00'),
-    (10, 100.50, '2025-01-01 10:00:00')
+    (10, 200.50, '2025-01-01 10:00:00')
 ;
 
 CREATE TABLE borrows (
@@ -251,6 +251,14 @@ CREATE TABLE borrows (
     FOREIGN KEY (bike_id) REFERENCES bikes (bike_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+INSERT INTO borrows (bike_id, user_id, datetime_from, datetime_to, payment_method)
+VALUES
+    (1,2,'2025-01-02 00:00:00','2025-01-03 00:00:00','card'),
+    (1,2,'2025-01-04 00:00:00','2025-01-05 00:00:00','card'),
+    (1,2,'2025-01-05 00:00:00','2025-01-09 00:00:00','card'),
+    (4,2,'2024-12-23 00:00:00','2024-12-28 00:00:00','card')
+;
 
 CREATE TABLE service_state_types (
     service_state_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -265,10 +273,17 @@ CREATE TABLE bike_services (
     bike_service_id INTEGER PRIMARY KEY AUTOINCREMENT,
     bike_id INTEGER NOT NULL,
     service_state_type_id INTEGER NOT NULL,
-    datetime_from DATETIME DEFAULT (datetime('now','localtime')) NOT NULL,
-    datetime_to DATETIME NOT NULL,
+    datetime_from TEXT NOT NULL,
+    datetime_to TEXT NOT NULL,
     reason TEXT NOT NULL,
     price REAL NOT NULL,
     FOREIGN KEY (bike_id) REFERENCES bikes (bike_id),
     FOREIGN KEY (service_state_type_id) REFERENCES service_state_types (service_state_type_id)
 );
+
+INSERT INTO bike_services (bike_id, service_state_type_id, datetime_from, datetime_to, reason, price)
+VALUES
+    (3,1,'2025-01-02 00:00:00','2025-01-03 00:00:00','reason',200),
+    (3,1,'2025-01-05 00:00:00','2025-01-09 00:00:00','reason',200),
+    (4,1,'2025-01-01 00:00:00','2025-01-08 00:00:00','reason',200)
+;

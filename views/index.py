@@ -8,22 +8,20 @@ index = Blueprint('index', __name__)
 @index.route('/', methods=['GET','POST'])
 def page():
     if len(request.args) > 0:
-        ready = request.args.getlist('ready')
-        if len(ready) == 0:
-            available, borrowed = 1, 0
-        elif len(ready) == 1 and ready[0] == 'available':
-            available, borrowed = 1, 1
-        elif len(ready) == 1 and ready[0] == 'borrowed':
-            available, borrowed = 0, 0
-        elif len(ready) == 2:
-            available, borrowed = 0, 1
         show = BikeService.get_all_to_show_by_filter(
-            [available, borrowed],request.args.get("weight"),request.args["weight_lim"],
-            request.args.getlist("size"),request.args.getlist("wsize"),request.args.getlist("material"),
-            request.args.getlist("gear"),request.args.get('search'),request.args.get("bprice")
+            bool(request.args.get("available")),
+            bool(request.args.get("not-available")),
+            request.args.get("weight"),
+            request.args.get("weight_lim"),
+            request.args.getlist("size"),
+            request.args.getlist("wsize"),
+            request.args.getlist("material"),
+            request.args.getlist("gear"),
+            request.args.get('search'),
+            request.args.get("bprice")
         )
     else:
-        show = BikeService.get_all()
+        show = BikeService.get_all_to_show()
         print(show)
     filters = BikeService.get_filters()
     return render_template(

@@ -8,29 +8,76 @@ class BikeService:
     def get_all():
         db = get_db()
         return db.execute("""
-        SELECT *
+            SELECT *
             FROM bikes b
-                     JOIN bike_prices USING (bike_id)
+            JOIN bike_prices USING (bike_id)
             WHERE datetime = (SELECT datetime FROM bike_prices WHERE bike_id = b.bike_id ORDER BY datetime DESC LIMIT 1)
         """).fetchall()
 
     @staticmethod
-    def get_by_id_for_borrow(bike_id):
+    def get_all_to_show():
         db = get_db()
-        sql = ("SELECT bike_id, name, description, image, price FROM bikes JOIN bike_prices "
-               "USING(bike_id) WHERE bike_id = ? AND datetime >= DATETIME('now') ")
-        arguments = [bike_id]
-        return db.execute(sql, arguments).fetchone()
+        return db.execute("""
+            SELECT b.bike_id, b.name, b.description, b.image, b.weight, b.body_size, b.wheel_size, b.body_material, b.gear_number, b.weight_limit, b.is_shown, bp.*, CASE
+                WHEN DATETIME(CURRENT_TIMESTAMP, 'localtime') BETWEEN br.datetime_from AND br.datetime_to AND br.datetime_from IS NOT NULL THEN 0
+                WHEN DATETIME(CURRENT_TIMESTAMP, 'localtime') BETWEEN bs.datetime_from AND bs.datetime_to AND bs.datetime_from IS NOT NULL THEN 0
+                ELSE b.is_available
+            END AS is_available
+            FROM bikes b
+            LEFT JOIN borrows br USING(bike_id)
+            LEFT JOIN bike_services bs USING(bike_id)
+            JOIN bike_prices bp USING(bike_id)
+            WHERE (
+                br.datetime_from = (SELECT datetime_from FROM borrows WHERE bike_id = b.bike_id ORDER BY datetime_from DESC LIMIT 1)
+                OR
+                br.datetime_from IS NULL
+            )
+            AND (
+                bs.datetime_from = (SELECT datetime_from FROM bike_services WHERE bike_id = b.bike_id ORDER BY datetime_from DESC LIMIT 1)
+                OR
+                bs.datetime_from IS NULL
+            )
+            AND bp.datetime = (SELECT datetime FROM bike_prices WHERE bike_id = b.bike_id ORDER BY datetime DESC LIMIT 1)
+            AND b.is_shown = 1
+        """).fetchall()
 
     @staticmethod
-    def get_all_to_show_by_filter(availabilities, wmax, wlmax, bodies, wsizes, materials, gears,
+    def get_all_to_show_by_filter(is_available,is_not_available, wmax, wlmax, bodies, wsizes, materials, gears,
                                   search_data, bprice):
         db = get_db()
-        sql = ("SELECT bike_id,name,description,image,weight,body_size,wheel_size, body_material, gear_number,"
-               "weight_limit, price, is_available FROM bikes JOIN bike_prices USING(bike_id) "
-               "WHERE is_shown = 1 AND price <= ? AND (is_available = ? OR is_available = ?)"
-               " AND weight <= ? AND weight_limit <= ? ")
-        arguments = [bprice]+availabilities+[wmax,wlmax]
+        sql = ("""
+            WITH all_bikes AS (
+                SELECT b.bike_id, b.name, b.description, b.image, b.weight, b.body_size, b.wheel_size, b.body_material, b.gear_number, b.weight_limit, b.is_shown, bp.*, CASE
+                    WHEN DATETIME(CURRENT_TIMESTAMP, 'localtime') BETWEEN br.datetime_from AND br.datetime_to AND br.datetime_from IS NOT NULL THEN 0
+                    WHEN DATETIME(CURRENT_TIMESTAMP, 'localtime') BETWEEN bs.datetime_from AND bs.datetime_to AND bs.datetime_from IS NOT NULL THEN 0
+                    ELSE b.is_available
+                END AS is_available
+                FROM bikes b
+                LEFT JOIN borrows br USING(bike_id)
+                LEFT JOIN bike_services bs USING(bike_id)
+                JOIN bike_prices bp USING(bike_id)
+                WHERE (
+                    br.datetime_from = (SELECT datetime_from FROM borrows WHERE bike_id = b.bike_id ORDER BY datetime_from DESC LIMIT 1)
+                    OR
+                    br.datetime_from IS NULL
+                )
+                AND (
+                    bs.datetime_from = (SELECT datetime_from FROM bike_services WHERE bike_id = b.bike_id ORDER BY datetime_from DESC LIMIT 1)
+                    OR
+                    bs.datetime_from IS NULL
+                )
+                AND bp.datetime = (SELECT datetime FROM bike_prices WHERE bike_id = b.bike_id ORDER BY datetime DESC LIMIT 1)
+                AND b.is_shown = 1
+            )
+            SELECT *
+            FROM all_bikes
+            WHERE 
+                price <= ? 
+                AND (is_available = ? OR is_available != ?)
+                AND weight <= ?
+                AND weight_limit <= ? 
+        """)
+        arguments = [bprice,is_available,is_not_available,wmax,wlmax]
         if bodies:
             sql+=" AND body_size IN ({})".format( ', '.join(['?'] * len(bodies)))
             arguments += bodies

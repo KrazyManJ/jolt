@@ -3,11 +3,13 @@
         <hr>
         <h2 class="font-bold">Availability</h2>
         <div class="filter">
-            <span><input type="checkbox" name="ready" value="available" {% if form.getlist('ready')[0] ==
-             'available' or form.getlist('ready')|length == 2%}checked{% endif %}>
-                <label>Available</label></span>
-            <span><input type="checkbox" name="ready" value="borrowed" {% if form.getlist('ready')[0] ==
-             'borrowed' or form.getlist('ready')|length == 2%}checked{% endif %}><label>Borrowed</label>
+            <span>
+                <input type="checkbox" name="available" value="true" {% if form.get("available") == 'true' or form|length == 0 %}checked{% endif %}>
+                <label>Available</label>
+            </span>
+            <span>
+                <input type="checkbox" name="not-available" value="true" {% if form.get("not-available") == 'true' or form|length == 0 %}checked{% endif %}>
+                <label>Not Available</label>
             </span>
         </div>
         <hr>
