@@ -7,12 +7,12 @@
     <form method="get">
         <div class="border border-titan-600 rounded-md p-1">
                 <input type="search" action="/" name="search"
-                   class="bg-[url('{{ url_for('static', filename="img/search.svg") }}')]
-                   bg-no-repeat bg-left bg-[length:1.5rem_1rem] pl-7 focus:outline-none
+                   class="bg-no-repeat bg-left pl-7 focus:outline-none
                    w-full" placeholder="Search for a bike..."
                    {% if request.args.get('search') %}
                         value="{{ request.args.get("search") }}"
                    {% endif %}
+                    style="background-image: url('{{ url_for('static', filename="img/search.svg") }}');background-size: 1.5rem 1rem"
                    onblur="search()">
         </div>
         <div class="flex gap-8 mt-8 flex-col md:flex-row">

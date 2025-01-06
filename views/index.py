@@ -21,7 +21,6 @@ def page():
         )
     else:
         show = BikeService.get_all_to_show()
-        print(show)
     filters = BikeService.get_filters()
     return render_template(
         'index/page.jinja', bikes=show, filters=filters, form=request.args)

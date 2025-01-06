@@ -9,15 +9,12 @@ login_page = Blueprint('login_page', __name__)
 @login_page.route('/', methods=["GET", "POST"])
 @guest_required
 def page():
+    form = LoginForm()
     if request.method == "POST":
 
-        user = UserService.verify(
-            request.form["login"],
-            request.form["password"]
-        )
+        user = UserService.verify(form.login.data,form.password.data)
         if not user:
             flash("Invalid username or password",category="error")
-            return redirect(request.path)
         else:
             session['authenticated'] = 1
             session['id'] = user['user_id']
@@ -25,8 +22,6 @@ def page():
             session['first_name'] = user['first_name']
             session['last_name'] = user['last_name']
             session['role'] = user['role_name']
+            return redirect(url_for("index.page"))
 
-
-        return redirect(url_for("index.page"))
-
-    return render_template("login_page/page.jinja", form=LoginForm())
+    return render_template("login_page/page.jinja", form=form)

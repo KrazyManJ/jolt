@@ -21,7 +21,7 @@
                 {% else %}
                    href="{{ url_for('login_page.page') }}"
                 {% endif %}
-            class="flex align-center justify-center gap-1"
+            class="flex items-center justify-center gap-1"
             >
                 {% if session['authenticated'] %}
                     <div class="hidden md:block mt-0.5 font-bold">

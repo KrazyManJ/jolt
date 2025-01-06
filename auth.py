@@ -5,11 +5,17 @@ from flask import redirect
 from flask import session
 from flask import url_for
 
+from services.user_service import UserService
+
 
 def login_required(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
-        if "authenticated" not in session:
+        if "authenticated" in session:
+            user = UserService.get_user_by_id(session["id"])
+            if not user and user["is_deactivated"]:
+                return redirect(url_for("logout_v.page"))
+        else:
             flash("You must be logged in.", category='warning')
             return redirect(url_for("login_page.page"))
         return func(*args, **kwargs)

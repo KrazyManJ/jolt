@@ -6,9 +6,23 @@
 {% endblock %}
 {% block body %}
     <div class="h-full grow flex items-center justify-center">
-        <div class="flex flex-col items-center
-           bg-titan-100 p-2 gap-1 w-60 rounded-md">
-            {% include 'register_page/form.jinja' %}
+        <div class="flex flex-col items-center bg-titan-100 p-2 gap-1 w-60 rounded-md border border-titan-500">
+            <h1 class="text-xl font-bold mb-1">Register</h1>
+            <form method="post">
+                {{ form.hidden_tag() }}
+                {{ form_field(form.login_name) }}
+                {{ form_field(form.first_name) }}
+                {{ form_field(form.last_name) }}
+                {{ form_field(form.email) }}
+                {{ form_field(form.phone_number) }}
+                <hr class="border-titan-500 my-5">
+                {{ form_field(form.password) }}
+                {{ form_field(form.password_again) }}
+                <div class="flex justify-end gap-20">
+                    <div class="mt-4 mb-1">{{ form_cancel(redirect=url_for('index.page')) }}</div>
+                    <div class="mt-4 mb-1">{{ form_submit("Register") }}</div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

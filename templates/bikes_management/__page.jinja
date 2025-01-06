@@ -7,10 +7,15 @@
 {% endmacro %}
 
 {% block body %}
-    <div class="flex grow gap-8">
+    <div class="flex grow flex-col md:flex-row gap-8">
         <aside class="h-max border border-titan-500 rounded p-4 shrink-0">
-            <h1 class="text-xl mb-4">Bikes management</h1>
-            <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between" onclick="toggleBikeManagementNav()">
+                <h1 class="text-xl">Bikes management</h1>
+                <div class="md:hidden">
+                    <img id="bike-management-nav-chevron" width="24" src="{{ url_for('static', filename="img/chevron-down.svg") }}">
+                </div>
+            </div>
+            <div id="bike-management-nav-content" class="flex flex-col gap-2  mt-4">
                 {{ link('bikes_management.statistics.page','Statistics') }}
                 {{ link('bikes_management.bikes.page','Bikes') }}
                 {{ link('bikes_management.borrows.page','Borrows') }}
@@ -24,5 +29,14 @@
             	
             {% endblock %}
         </div>
+        <script>
+            const toggleBikeManagementNav = () => {
+                const content = document.getElementById("bike-management-nav-content")
+                content.classList.toggle("hidden")
+                document.getElementById("bike-management-nav-chevron").src = content.classList.contains("hidden")
+                    ? "{{ url_for('static', filename="img/chevron-up.svg") }}"
+                    : "{{ url_for('static', filename="img/chevron-down.svg") }}"
+            }
+        </script>
     </div>
 {% endblock %}
