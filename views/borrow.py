@@ -15,12 +15,9 @@ def page(bike_id):
     if not available:
         return redirect(url_for('index.page'))
     if request.method == 'POST':
-        flash("Borrow successful", category='success')
-        print("lol: ",type(request.form['to']))
+        flash("Borrow was successful. By the time of beginning of borrow, please visit our store.", category='success')
         BorrowService.borrow(bike_id,session['id'],datetime.fromisoformat(request.form['to']).strftime('%Y-%m-%d %H:%M:%S'),request.form['payment_method'])
         return redirect(url_for('index.page'))
     else:
         bike = BikeService.get_bike_by_id(bike_id)
-        #Je to tady, protože to tahá jiný data, kdyby bylo potřeba, tak to zkusím předělat,
-        #ale teď už to nezvládnu 😅
         return render_template("borrow/page.jinja", bike=bike)

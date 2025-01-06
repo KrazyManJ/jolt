@@ -17,4 +17,10 @@ class BorrowService:
     @staticmethod
     def get_borrows_of_user(user_id: int):
         db = get_db()
-        return db.execute("SELECT * FROM borrows").fetchall()
+        return db.execute("""
+            SELECT * 
+            FROM borrows
+            JOIN bikes USING(bike_id)
+            WHERE user_id = ?
+            ORDER BY datetime_from DESC
+        """,(user_id,)).fetchall()

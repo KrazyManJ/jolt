@@ -9,10 +9,7 @@ user_profile = Blueprint('user_profile', __name__)
 @login_required
 def page():
     for a in BorrowService.get_borrows_of_user(session["id"]):
-        dfrom = a["datetime_from"]
-        dto = a["datetime_to"]
-        print("from", dfrom, type(dfrom))
-        print("to", dto, type(dto))
+        print(dict(a))
     return render_template(
         "user_profile/page.jinja",
         borrows=BorrowService.get_borrows_of_user(session["id"])

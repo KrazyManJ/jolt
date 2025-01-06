@@ -1,11 +1,32 @@
 {% extends '__page.jinja' %}
 
 {% block body %}
-    <div>
+    <div class="">
+        <h1 class="text-3xl font-bold mb-8">Your borrows</h1>
+
+        <table class="border border-titan-500 mx-auto w-full">
+            <tr>
+                <th></th>
+                <th>Borrow ID</th>
+                <th>Bike name</th>
+                <th>Borrow begins</th>
+                <th>Borrow ends</th>
+                <th>Payment</th>
+            </tr>
         {% for borrow in borrows %}
-        	<div>{{ borrow.datetime_from }}</div>
-        	<div>{{ borrow.datetime_to }}</div>
+
+            <tr>
+                <td class="p-1 border border-titan-500">
+                    <img width="48" src="data:image/jpeg;base64,{{ borrow.image }}" alt="">
+                </td>
+                <td class="p-1 border border-titan-500">{{ borrow.borrow_id }}</td>
+                <td class="p-1 border border-titan-500">{{ borrow.name }}</td>
+                <td class="p-1 border border-titan-500">{{ borrow.datetime_from }}</td>
+                <td class="p-1 border border-titan-500">{{ borrow.datetime_to }}</td>
+                <td class="p-1 border border-titan-500">{{ borrow.payment_method }}</td>
+            </tr>
         {% endfor %}
 
+        </table>
     </div>
 {% endblock %}
