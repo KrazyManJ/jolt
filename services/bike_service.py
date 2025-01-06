@@ -96,7 +96,7 @@ class BikeService:
         db.commit()
 
     @staticmethod
-    def get_bike_by_id_with_price(bike_id: int):
+    def get_bike_by_id(bike_id: int):
         db = get_db()
         return db.execute("SELECT * FROM bikes JOIN bike_prices USING(bike_id) WHERE bike_id = ? ORDER BY datetime DESC LIMIT 1",(bike_id,)).fetchone()
 
@@ -119,11 +119,3 @@ class BikeService:
     def was_bike_borrowed_by_id(bike_id):
         db = get_db()
         return bool(db.execute("SELECT EXISTS(SELECT * FROM bikes JOIN borrows USING(bike_id) WHERE bike_id = ?)",(bike_id,)).fetchone()[0])
-
-
-    @staticmethod
-    def get_bike_by_id(bike_id: int):
-        db = get_db()
-        sql = "SELECT bike_id, name FROM bikes WHERE bike_id = ?"
-        arguments = [bike_id]
-        return db.execute(sql,arguments).fetchone()

@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS service_state_types;
+
+DROP TABLE IF EXISTS bike_services;
+
 DROP TABLE IF EXISTS borrows;
 
 DROP TABLE IF EXISTS bike_services;
@@ -253,6 +257,9 @@ CREATE TABLE service_state_types (
     name TEXT UNIQUE NOT NULL,
     description TEXT NOT NULL
 );
+
+INSERT INTO service_state_types (name,description)
+VALUES ('Poniceny','Je poniceny');
 
 CREATE TABLE bike_services (
     bike_service_id INTEGER PRIMARY KEY AUTOINCREMENT,

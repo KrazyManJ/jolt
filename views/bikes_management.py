@@ -60,7 +60,7 @@ def edit_page(bike_id: int):
         return redirect(url_for("bikes_management.page"))
 
     form = EditBikeForm()
-    data = dict(BikeService.get_bike_by_id_with_price(bike_id))
+    data = dict(BikeService.get_bike_by_id(bike_id))
 
     if request.method == "POST":
         if not form.validate_on_submit():
