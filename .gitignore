@@ -6,3 +6,4 @@ config.py
 __pycache__
 **sccs
 styles.css.map
+*.map
