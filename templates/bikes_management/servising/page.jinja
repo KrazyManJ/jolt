@@ -15,26 +15,26 @@
             <th>From</th>
             <th>To</th>
             <th>Reason</th>
-            <th>Price (Kč)</th>
+            <th>Price (CZK)</th>
             <th>State</th>
             <th>Options</th>
         </tr>
     {% for service in services %}
     	<tr>
-            <td class="px-2 border border-titan-400">{{ service.bike_service_id }}</td>
-            <td class="px-2 border border-titan-400">{{ service.id_bike }}</td>
-            <td class="px-2 border border-titan-400">{{ service.bike_name }}</td>
-            <td class="px-2 border border-titan-400">{{ service.datetime_from }}</td>
-            <td class="px-2 border border-titan-400">{{ service.datetime_to }}</td>
-            <td class="px-2 border border-titan-400">{{ service.reason }}</td>
-            <td class="px-2 border border-titan-400">{{ service.price }}</td>
-            <td class="px-2 border border-titan-400">{{ service.state }}</td>
-            <td class="px-2 border border-titan-400">
+            <td class="px-2 border border-titan-400 text-center">{{ service.bike_service_id }}</td>
+            <td class="px-2 border border-titan-400 text-center">{{ service.id_bike }}</td>
+            <td class="px-2 border border-titan-400 text-center">{{ service.bike_name }}</td>
+            <td class="px-2 border border-titan-400 text-center">{{ service.datetime_from }}</td>
+            <td class="px-2 border border-titan-400 text-center">{{ service.datetime_to }}</td>
+            <td class="px-2 border border-titan-400 text-center">{{ service.reason }}</td>
+            <td class="px-2 border border-titan-400 text-center">{{ service.price }}</td>
+            <td class="px-2 border border-titan-400 text-center">{{ service.state }}</td>
+            <td class="px-2 border border-titan-400 text-center">
                 <div class="flex justify-center gap-2">
                     <a href="{{ url_for('bikes_management.servising.edit_page',service_id=service.bike_service_id) }}">
                         <img class="min-w-6 min-h-6 h-6 w-6" src="{{ url_for('static', filename='img/pencil.svg') }}">
                     </a>
-                    <a href="">
+                    <a href="{{ url_for('bikes_management.servising.remove',service_id=service.bike_service_id) }}">
                         <div class="h-6 w-6 bg-red-500"
                              style="mask-image: url('{{ url_for('static', filename='img/trash.svg') }}'); mask-repeat: no-repeat; mask-size: cover;"></div>
                     </a>

@@ -44,7 +44,6 @@
                 </tr>
             </table>
 
-{#            <div>{{  }}</div>#}
             {% if available %}
                 <div class="mt-5 font-bold text-xl text-right">{{ bike.price }} CZK/day</div>
                 <a class="mt-2 block p-4 text-center no-underline rounded w-full text-titan-50 bg-primary-500" href="{{ url_for("borrow.page", bike_id=bike.bike_id) }}">
