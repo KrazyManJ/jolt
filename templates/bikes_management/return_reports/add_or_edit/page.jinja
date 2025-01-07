@@ -7,15 +7,18 @@
 {% endblock %}
 {% block body %}
     <div class="w-full grow flex items-center justify-center">
-        <form method="POST" class="p-4 rounded shadow-xl border bg-titan-200 min-w-96">
+        <form method="POST" class="p-4 rounded shadow-xl border bg-titan-200 min-w-96 rounded-md border border-titan-500">
+            <h1 class="text-xl font-bold mb-1 text-center">{{ "Edit" if return_report_id else "Add" }} report</h1>
             {{ form.hidden_tag() }}
             {% if not return_report_id %}
                 {{ form_field(form.borrow_id) }}
             {% endif %}
             {{ form_field(form.bike_state_type_id) }}
             {{ form_field(form.employee_note) }}
-            {{ form_submit("Add") }}
-            {{ form_cancel(url_for("bikes_management.return_reports.page")) }}
+            <div class="justify-evenly flex">
+                {{ form_cancel(url_for("bikes_management.return_reports.page")) }}
+                {{ form_submit("Add") }}
+            </div>
         </form>
     </div>
 {% endblock %}

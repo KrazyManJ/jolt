@@ -53,9 +53,13 @@ input[type=checkbox] {
   margin-right: 0.3rem;
 }
 
-input:is([type=text], [type=password], [type=email]) {
+input:is([type=text], [type=password], [type=email], [type=number], [type=datetime]), textarea, select {
   border-radius: 0.25rem;
   border: 1px solid var(--col-titan-300);
+}
+
+input[type=file] {
+  width: 100%;
 }
 
 .filter-label {

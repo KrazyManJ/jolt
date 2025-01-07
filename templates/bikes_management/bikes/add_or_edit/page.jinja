@@ -7,7 +7,10 @@
 {% endblock %}
 {% block body %}
     <div class="w-full grow flex items-center justify-center">
-        <form method="POST" enctype="multipart/form-data" class="p-4 rounded shadow-xl border bg-titan-200">
+        <form method="POST" enctype="multipart/form-data"
+              class="p-4 rounded-md border border-titan-500 shadow-xl border bg-titan-200"
+        >
+            <h1 class="text-xl font-bold mb-1 text-center">{{ "Edit bike" if id else "Add bike" }}</h1>
             {{ form.hidden_tag() }}
             {{ form_field(form.name) }}
             {{ form_field(form.description) }}
@@ -23,7 +26,7 @@
                 {{ form_field(form.is_available) }}
                 {{ form_field(form.is_shown) }}
             {% endif %}
-            <div class="flex justify-evenly w-full">
+            <div class="flex justify-evenly w-full mt-4">
                 {{ form_cancel(url_for("bikes_management.bikes.page")) }}
                 {% if id %}
                     {{ form_submit("Edit") }}

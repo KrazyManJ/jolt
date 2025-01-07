@@ -37,8 +37,8 @@ class RegisterForm(FlaskForm):
 class EditUserForm(RegisterForm):
     password = None
     password_again = None
-    role = SelectField(label="Role")
-    is_deactivated = BooleanField(label="Is deactivated")
+    role = SelectField(label="Role", render_kw={"class":"w-full"})
+    is_deactivated = BooleanField(label="Is deactivated", render_kw={"class":"w-full"})
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -49,21 +49,22 @@ class EditUserForm(RegisterForm):
 class AddBikeForm(FlaskForm):
     name = StringField(
         label="Bike name",
-        validators=[validators.InputRequired()]
+        validators=[validators.InputRequired()],
+        render_kw={"class": "w-full"}
     )
-    description = StringField(label="Description",validators=[validators.InputRequired()])
+    description = StringField(label="Description",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
     image = FileField(
         label="Image",
         validators=[FileAllowed(["jpg","jpeg"]),FileRequired()],
-        render_kw={"accept":".jpg,.jpeg"}
+        render_kw={"accept":".jpg,.jpeg","class":"w-full"}
     )
-    weight = IntegerField(label="Weight",validators=[validators.InputRequired()])
-    body_size = IntegerField(label="Body size",validators=[validators.InputRequired()])
-    wheel_size = IntegerField(label="Wheel size",validators=[validators.InputRequired()])
-    body_material = StringField(label="Body material",validators=[validators.InputRequired()])
-    gear_number = IntegerField(label="Gear number",validators=[validators.InputRequired()])
-    weight_limit = IntegerField(label="Weight limit",validators=[validators.InputRequired()])
-    price = FloatField(label="Price",validators=[validators.InputRequired()])
+    weight = IntegerField(label="Weight",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    body_size = IntegerField(label="Body size",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    wheel_size = IntegerField(label="Wheel size",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    body_material = StringField(label="Body material",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    gear_number = IntegerField(label="Gear number",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    weight_limit = IntegerField(label="Weight limit",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    price = FloatField(label="Price",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
 
 
 class EditBikeForm(AddBikeForm):
@@ -78,15 +79,17 @@ class EditBikeForm(AddBikeForm):
 class ServiceForm(FlaskForm):
     name_id = SelectField(
         label="Bike",
-        validators=[validators.InputRequired()]
+        validators=[validators.InputRequired()],
+            render_kw={"class":"w-full"}
+
     )
     datetime_from = DateTimeField(label="From (dd.mm.yyyy h:m)",format="%d.%m.%Y %H:%M",
-                                  default=datetime.now(), validators=[validators.InputRequired()])
+                                  default=datetime.now(), validators=[validators.InputRequired()],render_kw={"class":"w-full"})
     datetime_to = DateTimeField(label="To (dd.mm.yyyy h:m)",format="%d.%m.%Y %H:%M",
-                                validators=[validators.InputRequired()])
-    reason = StringField(label="Reason",validators=[validators.InputRequired()])
-    price = FloatField(label="Price",validators=[validators.InputRequired()])
-    state = SelectField(label="State",validators=[validators.InputRequired()])
+                                validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    reason = StringField(label="Reason",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    price = FloatField(label="Price",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
+    state = SelectField(label="State",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -104,7 +107,7 @@ class ServiceForm(FlaskForm):
             self.state.choices = list_of_choices
 
 class EditReturnReportForm(FlaskForm):
-    bike_state_type_id = SelectField(label="Bike state",validators=[validators.InputRequired()])
+    bike_state_type_id = SelectField(label="Bike state",validators=[validators.InputRequired()],render_kw={"class":"w-full"})
     employee_note = TextAreaField(label="Employee note",validators=[validators.InputRequired()], render_kw={"class": "w-full"})
 
     def __init__(self, **kwargs):
