@@ -3,5 +3,74 @@
 
 {% block title %}Statistics{% endblock %}
 {% block content %}
-	Statistics
+    <button onclick="cancel()" class="w-fit bg-primary px-1 py-1 rounded-md text-white mb-2">Reset filters</button>
+    <h2 class="my-0.5 text-xl font-bold">Cashflow</h2>
+    <div class="flex flex-col">
+        <form id="cashflow_form" class="flex flex-col" method="get">
+            <span><label>From:</label><input name="cashflow_from" type="datetime-local" class="w-fit ml-0.5"
+                                            value="{% if request.args['cashflow_from'] %}{{ request.args['cashflow_from'] }}{% endif %}"></span>
+            <span><label>To:</label><input name="cashflow_to" type="datetime-local" class="w-fit  ml-0.5"
+                                           value="{% if request.args['cashflow_to'] %}{{ request.args['cashflow_to'] }}{% endif %}"></span>
+            <span class="flex gap-2 mt-0.5">
+                <input type="submit" class="w-fit bg-primary px-1 py-1 rounded-md text-white"
+                   value="Confirm">
+                <button type="reset" class="w-fit bg-primary px-1 py-1 rounded-md text-white">Reset</button>
+            </span>
+        </form>
+        <div class="flex gap-2 mt-2.5 justify-between">
+            <span class="statistics-label">
+                <label class="text-center">Incomes</label>
+                <input class="statistics-show text-center text-lime-500" type="text" value="{% if cashflow %}{{ cashflow.incomes }}{% else %}0{% endif %}" disabled>
+            </span>
+            <span class="statistics-label">
+                <label class="text-center">Costs</label>
+                <input class="statistics-show text-center text-red-600" type="text" value="{% if cashflow %}{{ cashflow.costs }}{% else %}0{% endif %}" disabled>
+            </span>
+            <span class="statistics-label">
+                <label class="text-center">Balance</label>
+                <input class="statistics-show text-center {% if cashflow %}{% if cashflow.balance >= 0 %}text-lime-500{% else %}text-red-600{% endif %}{% endif %}" type="text" value="{% if cashflow %}{{ cashflow.balance }}{% else %}0{% endif %}" disabled>
+            </span>
+        </div>
+    </div>
+    <hr class="mt-2 border-titan-500">
+    <span class="flex my-0.5 gap-2"><h2 class="text-xl font-bold w-fit">
+        Amount of borrowed bikes:</h2><input class="text-center border-solid
+        border-2 border-titan-950" type="text"
+        value="{% if amount %}{{ amount[0] }}{% else %}0{% endif %}" disabled></span>
+    <div class="flex flex-col">
+        <form class="flex flex-col" method="get">
+            <span><label>From:</label><input name="amount_from" type="datetime-local" class="w-fit ml-0.5"
+                                            value="{% if request.args['amount_from'] %}{{ request.args['amount_from'] }}{% endif %}"></span>
+            <span><label>To:</label><input name="amount_to" type="datetime-local" class="w-fit  ml-0.5"
+                                           value="{% if request.args['amount_to'] %}{{ request.args['amount_to'] }}{% endif %}"></span>
+            <span class="flex gap-2 mt-0.5">
+                <input type="submit" class="w-fit bg-primary px-1 py-1 rounded-md text-white"
+                   value="Confirm">
+                <button type="reset" class="w-fit bg-primary px-1 py-1 rounded-md text-white">Reset</button>
+            </span>
+        </form>
+    </div>
+     <hr class="mt-2 border-titan-500">
+    <h2 class="my-1 text-lg font-bold text-xl">Leaderboard</h2>
+    <table class="border-collapse border w-full">
+        <tr>
+            <th class="w-1/4">Image</th>
+            <th>Bike</th>
+            <th>Borrowed</th>
+        </tr>
+        {% for bike in bikes %}
+            <tr>
+                <td class="px-4 border border-titan-400 flex justify-center">
+                    <img width="100" src="data:image/jpeg;base64,{{ bike.image }}"></td>
+                <td class="px-4 border border-titan-400 text-center">{{ bike.name }}</td>
+                <td class="px-4 border border-titan-400 text-center">{{ bike.count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <script>
+        function cancel(){
+            let url = window.location.href;
+            window.location.href = url.split('?')[0];
+        }
+    </script>
 {% endblock %}
