@@ -12,10 +12,10 @@
             <div class="flex items-center justify-between" onclick="toggleBikeManagementNav()">
                 <h1 class="text-xl">Bikes management</h1>
                 <div class="md:hidden">
-                    <img id="bike-management-nav-chevron" width="24" src="{{ url_for('static', filename="img/chevron-down.svg") }}">
+                    <img id="bike-management-nav-chevron" width="24" src="{{ url_for('static', filename="img/chevron-left.svg") }}">
                 </div>
             </div>
-            <div id="bike-management-nav-content" class="flex flex-col gap-2  mt-4">
+            <div id="bike-management-nav-content" class="flex hidden md:flex flex-col gap-2 mt-4">
                 {{ link('bikes_management.statistics.page','Statistics') }}
                 {{ link('bikes_management.bikes.page','Bikes') }}
                 {{ link('bikes_management.borrows.page','Borrows') }}
@@ -34,7 +34,7 @@
                 const content = document.getElementById("bike-management-nav-content")
                 content.classList.toggle("hidden")
                 document.getElementById("bike-management-nav-chevron").src = content.classList.contains("hidden")
-                    ? "{{ url_for('static', filename="img/chevron-up.svg") }}"
+                    ? "{{ url_for('static', filename="img/chevron-left.svg") }}"
                     : "{{ url_for('static', filename="img/chevron-down.svg") }}"
             }
         </script>

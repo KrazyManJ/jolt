@@ -13,7 +13,7 @@
         {% if field.errors %}
             <ul>
                 {% for error in field.errors %}
-                    <li class="text-red-600">{{ error }}</li>
+                    <li class="text-red-600 text-xs text-center mt-1">{{ error }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -22,11 +22,11 @@
 
 {% macro form_submit(label="Submit") %}
     <input class="bg-primary px-2 py-2 rounded-md cursor-pointer
-    text-white" type="submit" value="{{ label }}">
+    text-titan-50" type="submit" value="{{ label }}">
 {% endmacro %}
 
 {% macro form_cancel(redirect,label="Cancel") %}
     <button type="button" onclick="window.location.href='{{ redirect }}'"
                                    class="bg-titan-400 px-2 py-2 rounded-md
-    text-white">{{ label }}</button>
+    text-titan-50">{{ label }}</button>
 {% endmacro %}

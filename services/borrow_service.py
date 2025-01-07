@@ -18,9 +18,9 @@ class BorrowService:
     def get_borrows_of_user(user_id: int):
         db = get_db()
         return db.execute("""
-            SELECT * 
-            FROM borrows
-            JOIN bikes USING(bike_id)
+            SELECT b.*, br.*, DATETIME(CURRENT_TIMESTAMP,'localtime') BETWEEN datetime_from AND datetime_to AS is_active 
+            FROM borrows br
+            JOIN bikes b USING(bike_id)
             WHERE user_id = ?
             ORDER BY datetime_from DESC
         """,(user_id,)).fetchall()
@@ -32,6 +32,7 @@ class BorrowService:
             SELECT *
             FROM borrows
             JOIN bikes USING(bike_id)
+            JOIN users USING(user_id)
             ORDER BY datetime_from DESC
         """).fetchall()
 
@@ -40,7 +41,7 @@ class BorrowService:
         db = get_db()
         return [tuple(v) for v in
             db.execute("""
-            SELECT borrow_id, CONCAT('(',login_name,') ',name,' - from ',datetime_from,' to ',datetime_to)
+            SELECT borrow_id, CONCAT('(',login,') ',name,' - from ',datetime_from,' to ',datetime_to)
             FROM borrows
             LEFT JOIN return_reports USING(borrow_id)
             JOIN bikes USING(bike_id)

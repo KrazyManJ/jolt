@@ -3,10 +3,14 @@
 {% block title %}Borrows{% endblock %}
 {% block content %}
     <div>
+        {% if borrows|length == 0 %}
+            <div class="italic text-3xl text-titan-400 text-center my-16">No reports found...</div>
+        {% else %}
         <table class="w-full border-collapse border border-titan-400">
             <tr>
                 <th></th>
                 <th>ID</th>
+                <th>Borrower</th>
                 <th>Bike name</th>
                 <th>Borrow begins at</th>
                 <th>Borrow ends at</th>
@@ -18,6 +22,7 @@
                         <img width="48" src="data:image/jpeg;base64,{{ borrow.image }}" alt="">
                     </td>
                     <td class="p-1 border border-titan-500">{{ borrow.borrow_id }}</td>
+                    <td class="p-1 border border-titan-500">{{ borrow.login }}</td>
                     <td class="p-1 border border-titan-500">{{ borrow.name }}</td>
                     <td class="p-1 border border-titan-500">{{ borrow.datetime_from }}</td>
                     <td class="p-1 border border-titan-500">{{ borrow.datetime_to }}</td>
@@ -25,5 +30,6 @@
                 </tr>
             {% endfor %}
         </table>
+        {% endif %}
     </div>
 {% endblock %}

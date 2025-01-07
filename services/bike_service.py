@@ -42,7 +42,7 @@ class BikeService:
         """).fetchall()
 
     @staticmethod
-    def get_all_to_show_by_filter(is_available,is_not_available, wmax, wlmax, bodies, wsizes, materials, gears,
+    def get_all_to_show_by_filter(is_available, is_not_available, weight_max, weight_limit_max, bodies, wsizes, materials, gears,
                                   search_data, bprice):
         db = get_db()
         sql = ("""
@@ -77,7 +77,7 @@ class BikeService:
                 AND weight <= ?
                 AND weight_limit <= ? 
         """)
-        arguments = [bprice,is_available,is_not_available,wmax,wlmax]
+        arguments = [bprice,is_available,is_not_available,weight_max,weight_limit_max]
         if bodies:
             sql+=" AND body_size IN ({})".format( ', '.join(['?'] * len(bodies)))
             arguments += bodies
@@ -103,13 +103,13 @@ class BikeService:
         weights = db.execute(sql).fetchone()
         sql = "SELECT MIN(weight_limit) AS wlmin, MAX(weight_limit) AS wlmax FROM bikes"
         weight_limits = db.execute(sql).fetchone()
-        sql = "SELECT DISTINCT body_size FROM bikes"
+        sql = "SELECT DISTINCT body_size FROM bikes ORDER BY body_size"
         body_sizes = db.execute(sql).fetchall()
-        sql = "SELECT DISTINCT wheel_size FROM bikes"
+        sql = "SELECT DISTINCT wheel_size FROM bikes ORDER BY wheel_size"
         wheel_sizes = db.execute(sql).fetchall()
-        sql = "SELECT DISTINCT body_material FROM bikes"
+        sql = "SELECT DISTINCT body_material FROM bikes ORDER BY body_material"
         body_materials = db.execute(sql).fetchall()
-        sql = "SELECT DISTINCT gear_number FROM bikes"
+        sql = "SELECT DISTINCT gear_number FROM bikes ORDER BY gear_number"
         gear_numbers = db.execute(sql).fetchall()
         sql = "SELECT MIN(price) AS pmin, MAX(price) AS pmax FROM bike_prices"
         prices = db.execute(sql).fetchone()

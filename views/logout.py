@@ -10,7 +10,7 @@ def logout():
     for val in [
         'authenticated',
         'id',
-        'login_name',
+        'login',
         'first_name',
         'last_name',
         'role'

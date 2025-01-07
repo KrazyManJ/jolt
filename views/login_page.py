@@ -10,15 +10,14 @@ login_page = Blueprint('login_page', __name__)
 @guest_required
 def page():
     form = LoginForm()
-    if request.method == "POST":
-
+    if request.method == "POST" and form.validate_on_submit():
         user = UserService.verify(form.login.data,form.password.data)
         if not user:
             flash("Invalid username or password",category="error")
         else:
             session['authenticated'] = 1
             session['id'] = user['user_id']
-            session['login_name'] = user['login_name']
+            session['login'] = user['login']
             session['first_name'] = user['first_name']
             session['last_name'] = user['last_name']
             session['role'] = user['role_name']

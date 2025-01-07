@@ -1,3 +1,5 @@
+@tailwind base;
+@tailwind utilities;
 :root {
   --col-primary-50: #fdfbe9;
   --col-primary-100: #faf6c7;
@@ -51,6 +53,11 @@ input[type=checkbox] {
   margin-right: 0.3rem;
 }
 
+input:is([type=text], [type=password], [type=email]) {
+  border-radius: 0.25rem;
+  border: 1px solid var(--col-titan-300);
+}
+
 .filter-label {
   margin-right: 0.4rem;
 }
@@ -60,6 +67,7 @@ input[type=checkbox] {
   flex-grow: 1;
   justify-content: space-around;
   flex-wrap: wrap;
+  column-gap: 1rem;
 }
 
 .bikes-grid {
@@ -69,6 +77,14 @@ input[type=checkbox] {
 
 .bikes-grid > * {
   min-width: 200px;
+}
+
+main :is(table, table td) {
+  border: 1px solid var(--col-titan-200);
+}
+
+.zebra tr:nth-child(2n) {
+  background: var(--col-titan-100);
 }
 
 .statistics-label {
@@ -85,5 +101,3 @@ input[type=checkbox] {
 .statistics-show {
   width: 100%;
 }
-
-/*# sourceMappingURL=styles.css.map */

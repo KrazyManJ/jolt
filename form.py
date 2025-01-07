@@ -17,11 +17,11 @@ from services.user_service import UserService
 
 
 class LoginForm(FlaskForm):
-    login = StringField(name='login', label='Username', validators=[validators.Length(min=4, max=30), validators.InputRequired()], render_kw={"class":"w-full"})
+    login = StringField(name='login', label='Login', validators=[validators.Length(min=4, max=30), validators.InputRequired()], render_kw={"class":"w-full"})
     password = PasswordField(name='password', label='Password', validators=[validators.Length(min=5), validators.InputRequired()], render_kw={"class":"w-full"})
 
 class RegisterForm(FlaskForm):
-    login_name = StringField(name='login', label='Username', validators=[validators.Length(min=4, max=30), validators.InputRequired()], render_kw={"class": "w-full"})
+    login = StringField(name='login', label='Login', validators=[validators.Length(min=4, max=30), validators.InputRequired()], render_kw={"class": "w-full"})
     first_name = StringField(name="firstname", label="Firstname", validators=[validators.InputRequired()], render_kw={"class": "w-full"})
     last_name = StringField(name="lastname", label="Lastname", validators=[validators.InputRequired()], render_kw={"class": "w-full"})
     email = EmailField(name="email",label="Email", validators=[validators.InputRequired()], render_kw={"class":"w-full"})

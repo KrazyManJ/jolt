@@ -15,7 +15,7 @@ def page(bike_id):
     if not available:
         return redirect(url_for('index.page'))
     if request.method == 'POST':
-        flash("Borrow was successful. By the time of beginning of borrow, please visit our store.", category='success')
+        flash("Borrow was successful. Please visit our store to claim your bike.", category='success')
         BorrowService.borrow(bike_id,session['id'],datetime.fromisoformat(request.form['to']).strftime('%Y-%m-%d %H:%M:%S'),request.form['payment_method'])
         return redirect(url_for('index.page'))
     else:

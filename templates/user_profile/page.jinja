@@ -4,7 +4,7 @@
     <div class="">
         <h1 class="text-3xl font-bold mb-8">Your borrows</h1>
 
-        <table class="border border-titan-500 mx-auto w-full">
+        <table class="mx-auto w-full hidden lg:table zebra">
             <tr>
                 <th></th>
                 <th>Borrow ID</th>
@@ -16,17 +16,52 @@
         {% for borrow in borrows %}
 
             <tr>
-                <td class="p-1 border border-titan-500">
+                <td class="p-1">
                     <img width="48" src="data:image/jpeg;base64,{{ borrow.image }}" alt="">
                 </td>
-                <td class="p-1 border border-titan-500">{{ borrow.borrow_id }}</td>
-                <td class="p-1 border border-titan-500">{{ borrow.name }}</td>
-                <td class="p-1 border border-titan-500">{{ borrow.datetime_from }}</td>
-                <td class="p-1 border border-titan-500">{{ borrow.datetime_to }}</td>
-                <td class="p-1 border border-titan-500">{{ borrow.payment_method }}</td>
+                <td class="p-1">
+                    <div class="flex items-center justify-between px-4">
+                        {{ borrow.borrow_id }}
+                        {% if borrow.is_active == 1 %}
+                            <div class="my-2 w-fit border border-lime-500 bg-lime-500 text-titan-50 px-2 rounded-full">active</div>
+                        {% endif %}
+
+                    </div>
+                </td>
+                <td class="p-1">{{ borrow.name }}</td>
+                <td class="p-1">{{ borrow.datetime_from }}</td>
+                <td class="p-1">{{ borrow.datetime_to }}</td>
+                <td class="p-1">{{ borrow.payment_method }}</td>
             </tr>
         {% endfor %}
 
         </table>
+
+        <div class="flex flex-col gap-5 lg:hidden">
+            {% for borrow in borrows %}
+                <div class="bg-titan-100 p-5 rounded border border-titan-300 shadow flex flex-col md:flex-row rounded-lg gap-4">
+            	    <img src=" data:image/jpeg;base64,{{ borrow.image }}" alt="" class="md:w-48 border shadow-sm rounded-xl w-full">
+                    <div class="w-full">
+                        <h2 class="text-2xl ">{{ borrow.name }}</h2>
+                        {% if borrow.is_active == 1 %}
+                            <div class="my-2 w-fit border border-lime-500 bg-lime-500 text-titan-50 px-2 rounded-full">active</div>
+                        {% endif %}
+                        <div class="flex justify-between">
+                            <label>From</label>
+                            <div>{{ borrow.datetime_from }}</div>
+                        </div>
+                        <div class="flex justify-between">
+                            <label>To</label>
+                            <div>{{ borrow.datetime_from }}</div>
+                        </div>
+                        <div class="flex justify-between">
+                            <label>Payment</label>
+                            <div>{{ borrow.payment_method }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
     </div>
 {% endblock %}

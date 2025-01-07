@@ -14,10 +14,10 @@ class UserService:
         db = get_db()
 
         sql = '''
-        SELECT u.user_id, u.login_name, u.first_name, u.last_name, r.name as role_name
+        SELECT u.user_id, u.login, u.first_name, u.last_name, r.name as role_name
         FROM users u
         JOIN roles r ON u.role_id = r.role_id
-        WHERE u.login_name = ? AND u.password_hash = ? AND NOT u.is_deactivated = 1
+        WHERE u.login = ? AND u.password_hash = ? AND NOT u.is_deactivated = 1
         '''
         arguments = [login, UserService.__hash_password(password)]
 
@@ -27,7 +27,7 @@ class UserService:
 
     @staticmethod
     def register(
-        login_name,
+        login,
         first_name,
         last_name,
         email,
@@ -37,11 +37,11 @@ class UserService:
         db = get_db()
 
         sql = """
-        INSERT INTO users (login_name,first_name,last_name,email,phone_number,password_hash)
+        INSERT INTO users (login,first_name,last_name,email,phone_number,password_hash)
         VALUES (?,?,?,?,?,?)
         """
 
-        arguments = [login_name, first_name, last_name, email, phone_number, UserService.__hash_password(password)]
+        arguments = [login, first_name, last_name, email, phone_number, UserService.__hash_password(password)]
 
         db.execute(sql, arguments)
         db.commit()
@@ -62,9 +62,9 @@ class UserService:
         return db.execute("SELECT * FROM users JOIN roles USING(role_id) WHERE user_id = ?",(user_id,)).fetchone()
 
     @staticmethod
-    def update_user_by_id(user_id: int, login_name, first_name, last_name, email, phone_number, is_deactivated, role_id):
+    def update_user_by_id(user_id: int, login, first_name, last_name, email, phone_number, is_deactivated, role_id):
         db = get_db()
-        sql = "UPDATE users SET login_name=?,first_name=?,last_name=?,email=?,phone_number=?,is_deactivated=?,role_id=? WHERE user_id = ?"
-        params = [login_name,first_name,last_name,email,phone_number,is_deactivated,role_id,user_id]
+        sql = "UPDATE users SET login=?,first_name=?,last_name=?,email=?,phone_number=?,is_deactivated=?,role_id=? WHERE user_id = ?"
+        params = [login,first_name,last_name,email,phone_number,is_deactivated,role_id,user_id]
         db.execute(sql,params)
         db.commit()

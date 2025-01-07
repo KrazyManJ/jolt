@@ -15,7 +15,7 @@ def get_db():
         )
         g.db.row_factory = sqlite3.Row
 
-        g.db.set_trace_callback(print)
+        # g.db.set_trace_callback(print)
         g.db.execute("PRAGMA foreign_keys = ON;")
         g.db.commit()
 

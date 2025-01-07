@@ -1,18 +1,25 @@
 <div class="bikes-grid gap-4 w-full">
     {% for bike in bikes %}
-        <div onclick="window.location.href= '{{ url_for("bike_details.page", bike_id=bike.bike_id) }}'" class="cursor-pointer w-full border border-titan-500 rounded p-2">
-            <img src="data:image/jpeg;base64,{{ bike.image }}" alt="">
-            <h3 class="text-center text-xl font-bold">{{ bike.name }}</h3>
-            <p class="text-titan-400 text-sm">{{ bike.description }}</p>
-            <div class="text-right mt-4 text-2xl font-bold">{{ bike.price }} CZK/day</div>
-            <div class="mt-4 flex justify-end">
-                {% if bike.is_available %}
-                    <a href="{{ url_for("borrow.page", bike_id=bike.bike_id) }}"
-                       class="p-1 px-4 bg-primary-500 text-titan-50 rounded no-underline">Borrow
-                    </a>
-                {% else %}
-                    Not available
-                {% endif %}
+        <div
+                onclick="window.location.href= '{{ url_for("bike_details.page", bike_id=bike.bike_id) }}'"
+                class="cursor-pointer w-full border border-titan-500 rounded p-2 flex flex-col justify-between"
+        >
+            <div>
+                <img src="data:image/jpeg;base64,{{ bike.image }}" alt="">
+                <h3 class="text-center text-xl font-bold">{{ bike.name }}</h3>
+                <p class="text-titan-400 text-sm">{{ bike.description }}</p>
+            </div>
+            <div>
+                <div class="text-right mt-4 text-2xl font-bold">{{ bike.price }} CZK/day</div>
+                <div class="mt-4 flex justify-end">
+                    {% if bike.is_available %}
+                        <a href="{{ url_for("borrow.page", bike_id=bike.bike_id) }}"
+                           class="p-1 px-4 bg-primary-500 text-titan-50 rounded no-underline">Borrow
+                        </a>
+                    {% else %}
+                        Not available
+                    {% endif %}
+                </div>
             </div>
         </div>
     {% endfor %}

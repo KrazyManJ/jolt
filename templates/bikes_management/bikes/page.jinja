@@ -7,7 +7,7 @@
         <img width="32" src="{{ url_for('static', filename='img/plus.svg') }}">
     </a>
     </div>
-    <table class="border-collapse border border-titan-400">
+    <table class="">
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -26,20 +26,24 @@
         </tr>
     {% for bike in bikes %}
         <tr>
-            <td class="px-2 border border-titan-400">{{ bike.bike_id }}</td>
-            <td class="px-2 border border-titan-400">{{ bike.name }}</td>
-            <td class="px-2 border border-titan-400"><img src="data:image/jpeg;base64,{{ bike.image }}" alt="" class="w-10"></td>
-            <td class="px-2 border border-titan-400">{{ bike.description }}</td>
-            <td class="px-2 border border-titan-400">{{ bike.weight }}</td>
-            <td class="px-2 border border-titan-400">{{ bike.body_size }}</td>
-            <td class="px-2 border border-titan-400">{{ bike.wheel_size }}</td>
-            <td class="px-2 border border-titan-400">{{ bike.body_material }}</td>
-            <td class="px-2 border border-titan-400">{{ bike.gear_number }}</td>
-            <td class="px-2 border border-titan-400">{{ bike.weight_limit }}</td>
-            <td class="px-2 border border-titan-400">{{ "yes" if bike.is_available else "no" }}</td>
-            <td class="px-2 border border-titan-400">{{ "yes" if bike.is_shown else "no" }}</td>
-            <td class="px-2 border border-titan-400">{{ bike.price }}</td>
-            <td class="px-2 border border-titan-400">
+            <td class="px-2">{{ bike.bike_id }}</td>
+            <td class="px-2">{{ bike.name }}</td>
+            <td class="px-2"><img src="data:image/jpeg;base64,{{ bike.image }}" alt="" class="w-10"></td>
+            <td class="px-2">{{ bike.description }}</td>
+            <td class="px-2">{{ bike.weight }}</td>
+            <td class="px-2">{{ bike.body_size }}</td>
+            <td class="px-2">{{ bike.wheel_size }}</td>
+            <td class="px-2">{{ bike.body_material }}</td>
+            <td class="px-2">{{ bike.gear_number }}</td>
+            <td class="px-2">{{ bike.weight_limit }}</td>
+            <td class="px-2">
+                <img src="{{ url_for('static',filename='img/'+("check" if bike.is_available else "x")+'.svg') }}">
+            </td>
+            <td class="px-2">
+                <img src="{{ url_for('static',filename='img/'+("check" if bike.is_shown else "x")+'.svg') }}">
+            </td>
+            <td class="px-2">{{ bike.price }}</td>
+            <td class="px-2">
                 <div class="flex justify-center gap-2">
                     <a href="{{ url_for("bikes_management.bikes.edit_page", bike_id=bike.bike_id) }}">
                         <img class="min-w-6 min-h-6 h-6 w-6" src="{{ url_for('static', filename='img/pencil.svg') }}">
