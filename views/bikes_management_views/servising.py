@@ -75,3 +75,16 @@ def edit_page(service_id):
     for key in data.keys():
         form.__getattribute__(key).data = data[key]
     return render_template("bikes_management/servising/add_or_edit/page.jinja", form=form, service_id=service_id)
+
+@servising.route('/delete-service/<service_id>')
+@login_required
+@roles_required("employee")
+def remove(service_id):
+    if not ServicingService.is_service_with_id(service_id):
+        return redirect(url_for("bikes_management.servising.page"))
+    ServicingService.delete_service(service_id)
+    flash(f"Successfully deleted service record with id '{service_id}'",category="success")
+    return render_template(
+        'bikes_management/servising/page.jinja',
+        services=ServicingService.get_all_services()
+    )

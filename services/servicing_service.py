@@ -5,12 +5,12 @@ class ServicingService:
     @staticmethod
     def get_all_services():
         db = get_db()
-        sql = ("SELECT bike_service_id, b.bike_id AS id_bike, "
-               "b.name AS bike_name, datetime_from, datetime_to,"
-               " reason, price, s.name AS state FROM bike_services "
-               "JOIN bikes AS b USING (bike_id) JOIN "
-               "service_state_types AS s USING "
-               "(service_state_type_id)")
+        sql = """SELECT bike_service_id, b.bike_id AS id_bike, 
+                b.name AS bike_name, datetime_from, datetime_to,
+                reason, price, s.name AS state FROM bike_services 
+               JOIN bikes AS b USING (bike_id) JOIN 
+               service_state_types AS s USING
+               (service_state_type_id)"""
         return db.execute(sql).fetchall()
 
     @staticmethod
@@ -61,5 +61,13 @@ class ServicingService:
                "WHERE name = ?), datetime_from = ?, datetime_to = ?, "
                "reason = ?, price = ? WHERE bike_service_id = ?")
         arguments = [bike_id,service_state,datetime_from,datetime_to,reason,price,service_id]
+        db.execute(sql, arguments)
+        db.commit()
+
+    @staticmethod
+    def delete_service(service_id):
+        db = get_db()
+        sql = "DELETE FROM bike_services WHERE bike_service_id = ?"
+        arguments = [service_id]
         db.execute(sql, arguments)
         db.commit()
