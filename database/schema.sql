@@ -8,8 +8,6 @@ DROP TABLE IF EXISTS service_state_types;
 
 DROP TABLE IF EXISTS borrows;
 
-DROP TABLE IF EXISTS bike_services;
-
 DROP TABLE IF EXISTS bike_prices;
 
 DROP TABLE IF EXISTS bikes;
